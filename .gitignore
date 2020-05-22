@@ -1,2 +1,4 @@
 #igonre all files starting with test when git push
 test*
+
+__pycache__

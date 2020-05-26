@@ -7,8 +7,6 @@ import math
 def gettsettle_d2_epstein(T, RH, d0, cNaCl):
 	# kholer size limit
 	smallest_d = kohler_RT(RH, d0, cNaCl)
-
-	#d^2 law
 	
 
 
@@ -16,6 +14,7 @@ def gettsettle_d2_epstein(T, RH, d0, cNaCl):
 	return t_settle
 
 def d2_law(T, RH, d0, cNaCl, t):
+	# only works for >~mm size droplets
 	# T[C], RH[%], d0[um], conc[mol/L], t[s]
 	
 	#constants specific to NaCl
@@ -31,8 +30,10 @@ def d2_law(T, RH, d0, cNaCl, t):
 	Zs = conc_to_molar_frac(cNaCl, MWNaCl)
 	P = water_vapour_pressure(T)*1e5 # [Pa]
 
+	# print(str(T_K)+'\n'+str(D)+'\n'+str(M)+'\n'+str(rho1)+'\n'+str(R)+'\n'+str(d0_m)+'\n'+str(Zs)+'\n'+str(P)+'\n'+str(RH))
+
 	LHS = 1-8*D*M/rho1/R*((P*(1-i*Zs))/T_K-P/T_K*RH/100)*t/(d0_m)**2
-	d = sqrt(LHS)*d0_m*1e6 # [um]
+	d = math.sqrt(LHS)*d0_m*1e6 # [um]
 	return d # [um]
 
 
@@ -58,7 +59,8 @@ def conc_to_molar_frac(c, MWsolute, MWsolvent = 18.02, rho_solvent = 1):
 def D_water_air(T):
 	# T in C
 	# https://www.researchgate.net/post/Binary_diffusion_coefficients_for_water_vapour_in_air_at_normal_pressure
-	return 22.5e-6*((T+273.15)/273.15)**1.8 # [m2/s] water vapour in air
+	D = 22.5e-6*((T+273.15)/273.15)**1.8
+	return D # [m2/s] water vapour in air
 
 def kohler_RT(RH, d0, cSolute):
 	# RH[%], d0[um], cSolulte[mol/L]

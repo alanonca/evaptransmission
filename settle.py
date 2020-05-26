@@ -34,7 +34,8 @@ def d2_law(T, RH, d0, cNaCl, t):
 
 	LHS = 1-8*D*M/rho1/R*((P*(1-i*Zs))/T_K-P/T_K*RH/100)*t/(d0_m)**2
 	d = math.sqrt(LHS)*d0_m*1e6 # [um]
-	return d # [um]
+	smallest_d = kohler_RT(RH, d0, cNaCl)
+	return max(d, smallest_d) # [um]
 
 
 def water_vapour_pressure(T_C):

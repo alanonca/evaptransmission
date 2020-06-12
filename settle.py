@@ -13,6 +13,14 @@ def gettsettle_d2_epstein(T, RH, d0, cNaCl):
 	
 	return t_settle
 
+def viability(T,RH):
+	#T[C], RH[%]
+	#https://www.dhs.gov/science-and-technology/sars-calculator
+
+	t_half = 29.98-0.58*T-0.12*RH #[hr]
+	return t_half #half life[hr]
+
+
 def d2_law(T, RH, d0, cNaCl, t):
 	# only works for >~mm size droplets
 	# T[C], RH[%], d0[um], conc[mol/L], t[s]

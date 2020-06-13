@@ -3,15 +3,35 @@
 # - droplet has constant temperature T
 
 import math
+from scipy.interpolate import interp1d
+import numpy as np
 
 def gettsettle_d2_epstein(T, RH, d0, cNaCl):
 	# kholer size limit
-	smallest_d = kohler_RT(RH, d0, cNaCl)
+	# smallest_d = kohler_RT(RH, d0, cNaCl)
 	
 
 
 	
 	return t_settle
+
+def partial_molal_vol(T, cNaCl):
+	# https://pubs.acs.org/doi/pdf/10.1021/j100697a022 eq 5 and table 2
+	# https://pubs.acs.org/doi/pdf/10.1021/cr60229a001 eq 8 for Sv value in the prev ref
+	# works for T between 0 and 55 C, need extrapolate functions to extend range
+
+	T_Sv_arr = np.linspace(0, 70, num=15, endpoint=True)
+	Sv_arr = np.array([1.444,1.529,1.613,1.697,1.782,1.868,1.955,2.046,2.138,2.234,2.333,2.435,2.542,2.653,2.768])
+	f_Sv = interp1d(T_Sv_arr, Sv_arr)
+
+	T_arr = np.array([0,5,15,25,35,45,55])
+	v2o_arr = np.array([12.855, 14.175, 15.577, 16.624, 17.28, 17.592, 17.913])
+	bvprime_arr = np.array([2.662, 1.341, 0.717, 0.079, -0.271, -0.519, -1.267])
+	f_v2o = interp1d(T_arr, v2o_arr) #linear interpolation
+	f_bvprime = interp1d(T_arr, bvprime_arr)
+
+	v2 = f_v2o(T) + 1.5*f_Sv(T)*math.sqrt(cNaCl) + f_bvprime(T)*cNaCl #ml/mol
+	return v2 #ml/mol
 
 def viability(T,RH):
 	#T[C], RH[%]

@@ -1,4 +1,4 @@
-# T[C], RH[%], d0[um], cNaCl[mol/L]
+# T[C], RH[%], d0[um], cNaCl[mol/L], fall_height[m] unless otherwise stated
 # assuming:
 # - droplet has constant temperature T
 # - dilute solution for kohler; any RH
@@ -9,13 +9,32 @@ import numpy as np
 
 R = 8.3145
 
-def settling_time(T, RH, d0, cNaCl):
-	#Kohler size, epstein settling velocity
-	r_eq = kohler(T, RH, d0, cNaCl)
+def settling_time(T, RH, d0, cNaCl, fall_height):
+	r_eq = kohler(T, RH, d0, cNaCl) #m
+	settle_v = epstein_v(T, r_eq) #m/s
+	settle_t = fall_height/settle_v #s
 
+	return settle_t/3600 #hr
 
-	
-	return t_settle
+def epstein_v(T, r):
+	# [C] and [m]
+	# Jakobsen 2019 equation 7
+	# k = 1.38064852e-23
+	# N_A = 6.02214086e23
+	P = 2.37*1e-3*1e5 #[Pa]
+	g = 9.8
+	R = 8.3145
+	MW_air = 28.9647
+	c_bar = math.sqrt(8*R*(T+273.15)/(math.pi*MW_air))
+	# print(c_bar)
+
+	delta = 1.18 # Jakobsen 2019 table 2 and fig 4, can be imporoved as f(size)
+	rho_p = 2.65e3 # particle density need to change for salt water density [kg/m3]
+	rho_air = P*MW_air*1e-3/(R*(T+273.15)) #ideal gas law, constant P, [kg/m3]
+
+	U = rho_p*g*r/(rho_air*c_bar*delta) #m/s
+
+	return U
 
 def kohler(T, RH, d0, cNaCl):
 	# modified eq 8 from Lewis 2008; any RH instead of just h~1
@@ -31,11 +50,11 @@ def kohler(T, RH, d0, cNaCl):
 	coeff = [math.log(RH/100), -epsilon_sigma_o, 0, c**3]
 	epsilon_roots = np.roots(coeff)
 	epsilon_root = epsilon_roots[~np.iscomplex(epsilon_roots)]
-	epsilon = epsilon_root[0].real
+	epsilon = epsilon_root[0].real.item() #item function converts numpy.float to float
 
 	r_wet = r_dry*epsilon
 
-	return r_wet
+	return r_wet #m
 
 def r_dry_NaCl(d0, cNaCl):
 	MWdry = 58.44
@@ -66,14 +85,6 @@ def partial_molal_vol(T, cNaCl):
 
 	v2 = f_v2o(T) + 1.5*f_Sv(T)*math.sqrt(cNaCl) + f_bvprime(T)*cNaCl #ml/mol
 	return v2 #ml/mol
-
-def viability(T,RH):
-	#T[C], RH[%]
-	#https://www.dhs.gov/science-and-technology/sars-calculator
-
-	t_half = 29.98-0.58*T-0.12*RH #[hr]
-	return t_half #half life[hr]
-
 
 # def d2_law(T, RH, d0, cNaCl, t):
 # 	# only works for >~mm size droplets

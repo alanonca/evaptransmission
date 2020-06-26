@@ -9,12 +9,34 @@ import numpy as np
 
 R = 8.3145
 
-def settling_time(T, RH, d0, cNaCl, fall_height):
+def settling_time(T, RH, d0, cNaCl, fall_height, model='empirical_small'):
 	r_eq = kohler(T, RH, d0, cNaCl) #m
-	settle_v = epstein_v(T, r_eq) #m/s
+	# print('size =' + str(r_eq*2*1e6))
+
+	if model == 'empirical_small':
+		settle_v = empirical_small_v(r_eq*2*1e6)/1e3 #m/s
+	elif model == 'empirical_big':
+		settle_v = empirical_big_v(r_eq*2*1e6)/1e3 #m/s
+	elif model == 'epstein':
+		settle_v = epstein_v(T, r_eq) #m/s
+	else:
+		print('invalid model selection in settling_time param input')
+		
+	# print('settle_v=' + str(settle_v*1000/3600))
+
 	settle_t = fall_height/settle_v #s
 
 	return settle_t/3600 #hr
+
+def empirical_small_v(d):
+	# input diameter in um, output U in mm/s
+	U = 0.0077*d**2 - 0.0256 * d + 0.0405
+	return U
+
+def empirical_big_v(d):
+	# input diameter in um, output U in mm/s
+	U = 0.0131*d**2 - 0.0746 * d + 0.1123
+	return U
 
 def epstein_v(T, r):
 	# [C] and [m]
@@ -26,7 +48,6 @@ def epstein_v(T, r):
 	R = 8.3145
 	MW_air = 28.9647
 	c_bar = math.sqrt(8*R*(T+273.15)/(math.pi*MW_air))
-	# print(c_bar)
 
 	delta = 1.18 # Jakobsen 2019 table 2 and fig 4, can be imporoved as f(size)
 	rho_p = 2.65e3 # particle density need to change for salt water density [kg/m3]

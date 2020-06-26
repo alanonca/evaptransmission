@@ -12,6 +12,7 @@ R = 8.3145
 def settling_time(T, RH, d0, cNaCl, fall_height, model='empirical_small'):
 	r_eq = kohler(T, RH, d0, cNaCl) #m
 	# print('size =' + str(r_eq*2*1e6))
+	# print('kholer size in nm=' + str(r_eq*1e9))
 
 	if model == 'empirical_small':
 		settle_v = empirical_small_v(r_eq*2*1e6)/1e3 #m/s
@@ -21,7 +22,7 @@ def settling_time(T, RH, d0, cNaCl, fall_height, model='empirical_small'):
 		settle_v = epstein_v(T, r_eq) #m/s
 	else:
 		print('invalid model selection in settling_time param input')
-		
+
 	# print('settle_v=' + str(settle_v*1000/3600))
 
 	settle_t = fall_height/settle_v #s
@@ -30,11 +31,14 @@ def settling_time(T, RH, d0, cNaCl, fall_height, model='empirical_small'):
 
 def empirical_small_v(d):
 	# input diameter in um, output U in mm/s
+	# for big droplets
+	# data from Jakobsen 2019
 	U = 0.0077*d**2 - 0.0256 * d + 0.0405
 	return U
 
 def empirical_big_v(d):
 	# input diameter in um, output U in mm/s
+	# for small droplets
 	U = 0.0131*d**2 - 0.0746 * d + 0.1123
 	return U
 
@@ -59,7 +63,11 @@ def epstein_v(T, r):
 
 def kohler(T, RH, d0, cNaCl):
 	# modified eq 8 from Lewis 2008; any RH instead of just h~1
-	r_dry = r_dry_NaCl(d0, cNaCl)
+	# results verified to Lewis 2008 Fig 2
+	r_dry = r_dry_NaCl(d0, cNaCl) #m
+
+	# print('r_dry in nm' + str(r_dry*1e9))
+
 	vw_bar = partial_molal_vol(T,cNaCl)/1e6 #m3/mol
 	sigma = sigma_w(T)
 	r_sigma_o = 2*vw_bar*sigma/(R*(T+273.15)) #m

@@ -8,8 +8,9 @@ t_stl = settle.settling_time(25,90,10,0.05,1.5)
 print(t_stl)
 print(type(t_stl))
 
-# recommend to use model='empirical_big' if all droplets >10um
+# recommend param setting model='empirical_big' if all droplets >10um
 # doesn't quite work with small droplets with >150% error for <5um
+# model param options: 'empirical_small', 'empirical_big', 'epstein'
 t_stl2 = settle.settling_time(15,50,50,0.05,1.5,model='empirical_big')
 print(t_stl2)
 

@@ -10,9 +10,10 @@ import weather
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import module_initsize
+import module_covidstats
 
 
-# In[13]:
+# In[3]:
 
 
 
@@ -21,7 +22,7 @@ filename = 'LADTweather.csv'# Input the .csv data file here
 [tempC,RH] = weather.weatherdataprocess(filename)
 tset = []
 
-mode_to_test = 'coughing'
+mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
 for day in range(len(tempC)):
     daily_T = tempC[day]
@@ -37,7 +38,7 @@ for day in range(len(tempC)):
     tset.append(daily_tset)
 
 
-# In[15]:
+# In[4]:
 
 
 plt.plot(tset)
@@ -46,20 +47,14 @@ plt.show()
 
 weather.weatherdatapplot(tempC,RH)
 
+countyname = 'Los Angeles County'
+input_date0 = '3/15/20'
+input_date1 = '4/15/20'
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+[total,dailynew] = module_covidstats.confirmedcases(countyname,input_date0,input_date1)
+plt.plot(dailynew)
+plt.ylabel('Daily new confirmed cases')
+plt.show()
 
 
 

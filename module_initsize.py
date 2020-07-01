@@ -19,7 +19,7 @@ def speaking(T,RH):
     for binnum in range(16):
         size = sizeclass[binnum]
         count = numcon[binnum]
-        settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5)
+        settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
         t_settle.append(settling_time)
     return(sizeclass,numcon,t_settle)
 
@@ -31,7 +31,7 @@ def coughing(T,RH):
     for binnum in range(16):
         size = sizeclass[binnum]
         count = numcon[binnum]
-        settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5)
+        settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
         t_settle.append(settling_time)
     return(sizeclass,numcon,t_settle)
 

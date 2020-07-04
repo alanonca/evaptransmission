@@ -77,6 +77,7 @@ def kohler(T, RH, d0, cNaCl):
 	c = 1.1 #for NaCl
 
 	coeff = [math.log(RH/100), -epsilon_sigma_o, 0, c**3]
+	# coeff = [-(1-RH/100), -epsilon_sigma_o, 0, c**3]
 	epsilon_roots = np.roots(coeff)
 	epsilon_root = epsilon_roots[~np.iscomplex(epsilon_roots)]
 	epsilon = epsilon_root[0].real.item() #item function converts numpy.float to float

@@ -28,8 +28,8 @@ def weatherdataprocess(filename,input_date0,input_date1):
 
     date0 = np.fromstring(input_date0, dtype=int, sep="/")
     date1 = np.fromstring(input_date1, dtype=int, sep="/")
-    d0 = date(2000+date0[2],date0[0],date0[1])+timedelta(days=14)
-    d1 = date(2000+date1[2],date1[0],date1[1])+timedelta(days=14)
+    d0 = date(2000+date0[2],date0[0],date0[1])
+    d1 = date(2000+date1[2],date1[0],date1[1])
     tempdata = []
     RHdata = []
     
@@ -37,11 +37,13 @@ def weatherdataprocess(filename,input_date0,input_date1):
         pull_a_record = recorddata[num]
         d_rec = np.fromstring(pull_a_record[1], dtype=int, sep="-")
         drec = date(d_rec[0],d_rec[1],d_rec[2])
+        #print(drec)
         if drec >= d0:
             if drec <= d1:
                 if pull_a_record[2] == 'SOD  ':#to read 'summary of the day' data only for daily average temp and RH
                     tempdata.append(pull_a_record[19])
                     RHdata.append(pull_a_record[20])
+                    #print(pull_a_record[20])
                     temp = np.array(tempdata) 
                     temp = temp.astype(np.float)
                     tempC = (temp-32)*5/9

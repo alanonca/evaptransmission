@@ -21,9 +21,10 @@ import timeseries #AG
 
 
 # Input section: county to be studied, weather date range, transmission mode
-countyname = 'King County'
-input_date0 = '2/23/20' # for weather data range
-input_date1 = '3/9/20'
+countyname = 'Miami-Dade County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
+
+input_date0 = '2/23/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
+input_date1 = '3/1/20'
 mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
 
@@ -36,6 +37,8 @@ if countyname == 'Los Angeles County':
     filename = 'LAweather.csv'
 elif countyname == 'King County':
     filename = 'KCweather.csv'
+elif countyname == 'Miami-Dade County':
+    filename = 'MIAweather.csv'
 
 [tempC,RH] = module_weather.weatherdataprocess(filename,input_date0,input_date1) 
 

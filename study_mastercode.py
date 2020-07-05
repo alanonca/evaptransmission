@@ -14,6 +14,8 @@ import module_weather
 import module_initsize
 import module_covidstats
 
+import timeseries #AG
+
 
 # In[2]:
 
@@ -107,3 +109,13 @@ savetxt('output.csv', outputdata, delimiter=',')
 
 
 
+#AG
+offset = 6
+print('offset by %.2i days' % offset)
+# def comparison(data1[array], data2[array], offset[days]):
+[corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(tset,nc_perc,offset)
+print('Pearsons correlation: %.3f' % corr_pearson)
+print('Pearsons p value: %.3f' % pval_pearson)
+print('Spearmans correlation: %.3f' % corr_spearman)
+print('Spearmans p value: %.3f' % pval_spearman)
+print('')

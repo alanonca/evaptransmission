@@ -110,7 +110,7 @@ savetxt('output.csv', outputdata, delimiter=',')
 
 
 #AG
-offset = 6
+offset = 3
 print('offset by %.2i days' % offset)
 # def comparison(data1[array], data2[array], offset[days]):
 [corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(tset,nc_perc,offset)

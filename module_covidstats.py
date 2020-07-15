@@ -33,16 +33,27 @@ def confirmedcases(countyname,input_date0,input_date1): # Extract confirmed case
                     date0 = np.fromstring(input_date0, dtype=int, sep="/")
                     date1 = np.fromstring(input_date1, dtype=int, sep="/")
                     d_data0 = date(2020,1,22)
-                    d0 = date(2000+date0[2],date0[0],date0[1])+timedelta(days=14)
-                    d1 = date(2000+date1[2],date1[0],date1[1])+timedelta(days=14)
+                    d0 = date(2000+date0[2],date0[0],date0[1])+timedelta(days=-12)
+                    d1 = date(2000+date1[2],date1[0],date1[1])+timedelta(days=4)
                     date0_numindata = d0 - d_data0
                     delta = d1 - d0
                     cases_sub = record[3 + date0_numindata.days : 4 + date0_numindata.days + delta.days]
                     cases = record[4 + date0_numindata.days : 5 + date0_numindata.days + delta.days]
-                                            
+                                                       
     cases = np.array(cases).astype(np.float)
     cases_sub = np.array(cases_sub).astype(np.float)
-    newcases = cases - cases_sub
-    nc_perc = newcases/cases_sub #Percent of newcases to yesterday's total
-    return [dateseries,cases,newcases,nc_perc]
+    nc_series = cases - cases_sub # starting from 1/23/2020 
+    newcases = nc_series[12:len(nc_series)-4]
+    data_date = date(2000+date1[2],date1[0],date1[1]) - date(2000+date0[2],date0[0],date0[1])
+    numdatadays =data_date.days+1
+    
+    activecases = []
+    
+    for n in range(numdatadays):
+        active_n = sum(nc_series[n:n+16])
+        activecases.append(active_n)
+    
+    nc_perc = newcases/activecases # Percent of newcases to total active cases as of the day
+    
+    return [dateseries,cases,activecases,newcases,nc_perc]
 

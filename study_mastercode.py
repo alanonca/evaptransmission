@@ -21,10 +21,10 @@ import timeseries #AG
 
 
 # Input section: county to be studied, weather date range, transmission mode
-countyname = 'Miami-Dade County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
+countyname = 'King County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
 
-input_date0 = '2/23/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
-input_date1 = '3/1/20'
+input_date0 = '2/27/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
+input_date1 = '3/9/20'
 mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
 
@@ -75,7 +75,7 @@ plt.show()
 
 
 # Load corresponding COVID-19 data
-[dateseries,total,dailynew,nc_perc] = module_covidstats.confirmedcases(countyname,input_date0,input_date1)
+[dateseries,cases,activecases,dailynew,nc_perc] = module_covidstats.confirmedcases(countyname,input_date0,input_date1)
 plt.plot(dailynew)
 plt.ylabel('Daily new confirmed cases')
 plt.show()
@@ -113,7 +113,7 @@ savetxt('output.csv', outputdata, delimiter=',')
 
 
 #AG
-offset = 3
+offset = 7
 print('offset by %.2i days' % offset)
 # def comparison(data1[array], data2[array], offset[days]):
 [corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(tset,nc_perc,offset)

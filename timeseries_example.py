@@ -11,7 +11,7 @@ df = macrodata.iloc[:, 2:5]
 
 # Function comparing 3 timeseries:
 # timeseries.three(df[pandas dataframe], maxOffset[int], stationaryTest[bool]=True, trainTestSplit[bool]=True, 
-# 	splitLastxRows[int]=4, forecastDays[int]=10)
+# 	splitLastxRows[int]=4, forecastDays[int]=10, VARorderselect='aic')
 
 # More explanation of the parameters:
 # Vector autoregression of 3 timeseries: settling time, viability and daily new cases percentage increase
@@ -26,6 +26,9 @@ df = macrodata.iloc[:, 2:5]
 # splitLastxRows is the number of rows put into the testing dataset. This variable is only used if trainTestSplit=True
 # forecastDays is the number of days to forecast into the future using all current data as training dataset, 
 # 	this vairable is only used if trainTestSplit=False
+# VARorderselect is the method that the model uses to determine the actual lag/offset within the maxOffset
+# 	defined earlier. Possible values are {‘aic’, ‘fpe’, ‘hqic’, ‘bic’, None}. Try different ones if 
+# 	the default aic is not giving expected lag
 
 # Split original data into training and test dataset and see if model predicts known data well
 [fig_current, fig_split] = timeseries.three(df, 14, stationaryTest=True, trainTestSplit=True, splitLastxRows=4)

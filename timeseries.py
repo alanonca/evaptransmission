@@ -81,7 +81,7 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		fig_split = results.plot_forecast(forecastDays)
 
 		# evaluate forecast
-		fevd = results.fevd(forecastDays)
+		fevd = results.fevd(maxOffset)
 		fevd.summary()
 
 		return [fig_current, fig_split]

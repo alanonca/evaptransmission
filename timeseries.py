@@ -30,7 +30,7 @@ def comparison(data1, data2, offset):
 
 	return [corrp, pvalp, corrs, pvals]
 
-def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1):
+def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, VARorderselect='aic'):
 	# get training and test dataframes
 	if trainTestSplit:
 		df_train, df_test = df[0:-splitLastxRows], df[-splitLastxRows:]
@@ -47,7 +47,7 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 
 	# model fitting using all data (ad)
 	model_ad = VAR(df)
-	results_ad = model_ad.fit(maxlags=maxOffset, ic='aic')
+	results_ad = model_ad.fit(maxlags=maxOffset, ic=VARorderselect)
 
 	lag_order = results_ad.k_ar
 
@@ -70,7 +70,7 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 
 		# model fitting
 		model = VAR(df_train)
-		results = model.fit(maxlags=maxOffset, ic='aic')
+		results = model.fit(maxlags=maxOffset, ic=VARorderselect)
 		print(results.summary())
 
 		# forecast

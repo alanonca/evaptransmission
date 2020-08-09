@@ -56,7 +56,6 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 
 		#plot forecast
 		results_ad.forecast(df.values[-lag_order:], forecastDays)
-		# plt.show(results_ad.plot_forecast(forecastDays))
 		fig_forecast = results_ad.plot_forecast(forecastDays)
 
 		return fig_forecast
@@ -64,7 +63,6 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 	else:
 		#plot current
 		results_ad.forecast(df.values[-lag_order:], 0)
-		# plt.show(results_ad.plot_forecast(0))
 		fig_current = results_ad.plot_forecast(0)
 
 		#parameters for training and test split
@@ -80,7 +78,6 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		results.forecast(df.values[-lag_order:], forecastDays)
 
 		# plot forecast
-		# plt.show(results.plot_forecast(forecastDays))
 		fig_split = results.plot_forecast(forecastDays)
 
 		# evaluate forecast
@@ -90,7 +87,7 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		return [fig_current, fig_split]
 	
 
-# Augmented Dickey-Fuller Test (ADF Test)/unit root test
+# Augmented Dickey-Fuller Test (ADF Test) / unit root test
 def stationary(col, signif=0.05):
     dftest = adfuller(col, autolag='AIC')
     adf = pd.Series(dftest[0:4], index=['Test Statistic','p-value','# Lags','# Observations'])
@@ -101,4 +98,4 @@ def stationary(col, signif=0.05):
     if p <= signif:
         print(f" Series is Stationary")
     else:
-        print(f" Series is Non-Stationary")#apply adf test on the series
+        print(f" Series is Non-Stationary")

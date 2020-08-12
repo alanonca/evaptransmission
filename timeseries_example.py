@@ -3,11 +3,14 @@ import pandas as pd
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 
-# get sample dataframe df of many row and 3 columns
+# get sample dataframe df of many row and 3 columns; this dataset is long enough to run timeseries.three
 macrodata = sm.datasets.macrodata.load_pandas().data
-df = macrodata.iloc[:, 2:5]
-# print(type(df))
-# print(df)
+df_this_is_long_enough_to_run_timeseries_three = macrodata.iloc[:, 2:5]
+
+# read output.csv as dataframe; this dataset is currently not long enough to get results from timeseries.three
+df_csv = pd.read_csv('output.csv', header=None)
+df = df_csv.T # transpose
+df.columns = ['tset', 'viability', 'ncperc']
 
 # Function comparing 3 timeseries:
 # timeseries.three(df[pandas dataframe], maxOffset[int], stationaryTest[bool]=True, trainTestSplit[bool]=True, 

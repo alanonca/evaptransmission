@@ -40,16 +40,18 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 	# stationary test
 	if stationaryTest:
 		for col in range(3):
-			print(col)
+			print("Stationary test for column # " + str(col))
 			testdf=df_train.iloc[:,col]
 			stationary(testdf)
 			print('------------------------------------')
 
 	# model fitting using all data (ad)
+	# print(df)
 	model_ad = VAR(df)
 	results_ad = model_ad.fit(maxlags=maxOffset, ic=VARorderselect)
 
 	lag_order = results_ad.k_ar
+	print(lag_order)
 
 	if not trainTestSplit:
 		print(results_ad.summary())

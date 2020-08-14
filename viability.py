@@ -25,4 +25,5 @@ def kdecay(T, RH, UVB):
 	# print(T_norm*UVB_norm)
 
 	k = A + B*T_norm + C*RH_norm + D*UVB_norm + E*T_norm*UVB_norm
-	return max(0,k)
+	return max(1e-2,k)
+# YZ changed the return of the function here. Changed from max(0,k), to avoid invalid half-life. Plz make changes if this is not reasonable 

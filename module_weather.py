@@ -49,6 +49,7 @@ def weatherdataprocess(filename,input_date0,input_date1):
                     tempC = (temp-32)*5/9
                     RH = np.array(RHdata)
                     RH = RH.astype(np.float)
+                    print(drec)
 
     return [tempC,RH]
 

@@ -9,26 +9,24 @@ import viability
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from numpy import savetxt
+import math
 
 import module_weather
 import module_initsize
 import module_covidstats
+import viability
 
 import timeseries #AG
 
 
-# In[2]:
-
 
 # Input section: county to be studied, weather date range, transmission mode
-countyname = 'King County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
-
-input_date0 = '2/27/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
-input_date1 = '3/9/20'
+countyname = 'Los Angeles County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
+offset = 6
+input_date0 = '4/1/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
+input_date1 = '4/25/20'
 mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
-
-# In[3]:
 
 
 # Load weather data
@@ -45,12 +43,11 @@ elif countyname == 'Miami-Dade County':
 module_weather.weatherdatapplot(tempC,RH)
 
 
-# In[4]:
-
 
 # Calculate daily settling time for the transmission mode of study
 
 tset = []
+viab_hl = []
 
 for day in range(len(tempC)):
     daily_T = tempC[day]
@@ -65,13 +62,19 @@ for day in range(len(tempC)):
     #daily_tset = popt[1]
     #tset.append(daily_tset)
     tset.append(t_peak)
+    
+    #Calculate virus half life everyday 
+    decay_rate = viability.kdecay(daily_T,daily_RH,0)
+    halflife = math.log(2)/decay_rate
+    viab_hl.append(halflife)
 
 plt.plot(tset)
 plt.ylabel('Daily droplet settling time in hr')
 plt.show()
 
-
-# In[5]:
+plt.plot(viab_hl)
+plt.ylabel('Daily virus half-life in min')
+plt.show()
 
 
 # Load corresponding COVID-19 data
@@ -92,13 +95,18 @@ plt.scatter(tset,nc_perc)
 plt.ylabel('Daily percent new cases v.s. settling time')
 plt.show()
 
+plt.scatter(viab_hl,dailynew)
+plt.ylabel('Daily new confirmed cases v.s. virus half-life')
+plt.show()
 
-# In[9]:
+plt.scatter(viab_hl,nc_perc)
+plt.ylabel('Daily percent new cases v.s. virus half-life')
+plt.show()
 
 
 # Compile and output into a CSV file
-outputdata = [tset,dailynew,nc_perc]
-print(outputdata)
+outputdata = [tset,viab_hl,nc_perc]
+#print(outputdata)
 
 
 # In[12]:
@@ -113,7 +121,6 @@ savetxt('output.csv', outputdata, delimiter=',')
 
 
 #AG
-offset = 7
 print('offset by %.2i days' % offset)
 # def comparison(data1[array], data2[array], offset[days]):
 [corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(tset,nc_perc,offset)

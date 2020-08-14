@@ -20,7 +20,7 @@ def speaking(T,RH):
     #sizeclass = [12,20,28,36,45,62.5,87.5,112.5,137.5,175,225,375,750,1500] # in um
     #numcon = [22.23,11.33,7.87,4.32,3.37,4.57,3.44,4.52,4.31,4.52,3.85,3.45,1.11,0.00] # in cm^-3
     t_settle = []
-    sizepeak = 6
+    sizepeak = 3 # Just test, not peak
     for binnum in range(16):
         size = sizeclass[binnum]
         count = numcon[binnum]

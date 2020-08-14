@@ -95,7 +95,7 @@ def stationary(col, signif=0.05):
        adf['Critical Value (%s)'%key] = value
     print(adf)
     p = adf['p-value'] 
-    if p <= signif:
-        print(f" Series is Stationary")
-    else:
-        print(f" Series is Non-Stationary")
+    #if p <= signif:
+    #    print(f' Series is Stationary')
+    #else:
+    #    print(f' Series is Non-Stationary')

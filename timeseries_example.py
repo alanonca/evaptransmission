@@ -8,7 +8,7 @@ macrodata = sm.datasets.macrodata.load_pandas().data
 df_this_is_long_enough_to_run_timeseries_three = macrodata.iloc[:, 2:5]
 
 # read output.csv as dataframe; this dataset is currently not long enough to get results from timeseries.three
-df_csv = pd.read_csv('output.csv', header=None)
+df_csv = pd.read_csv('output_LA.csv', header=None)
 df = df_csv.T # transpose
 df.columns = ['tset', 'viability', 'ncperc']
 
@@ -34,10 +34,10 @@ df.columns = ['tset', 'viability', 'ncperc']
 # 	the default aic is not giving expected lag
 
 # Split original data into training and test dataset and see if model predicts known data well
-[fig_current, fig_split] = timeseries.three(df, 14, stationaryTest=True, trainTestSplit=True, splitLastxRows=4)
+[fig_current, fig_split] = timeseries.three(df, 4, stationaryTest=True, trainTestSplit=True, splitLastxRows=4)
 
 # Use all data as training data and forecast into the future
-fig_forecast = timeseries.three(df, 14, trainTestSplit=False, forecastDays=10)
+fig_forecast = timeseries.three(df, 4, trainTestSplit=False, forecastDays=10)
 
 # show fig_current, fig_split and fig_forecast
 plt.show() 

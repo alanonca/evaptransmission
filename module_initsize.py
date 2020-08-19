@@ -15,16 +15,19 @@ import scipy.special as sp
 
 def speaking(T,RH):
     NaCl_con = 80.0/1000; # 80.0 mmol/L converted to mol/L for saliva, from Kallapur et al.
-    sizeclass = [3,6,12,20,28,36,45,62.5,87.5,112.5,137.5,175,225,375,750,1500] # in um
-    numcon = [4.59,66.21,22.23,11.33,7.87,4.32,3.37,4.57,3.44,4.52,4.31,4.52,3.85,3.45,1.11,0.00] # in cm^-3
+    sizeclass = [3,6,12,20,28,36,45,62.5,87.5,112.5,137.5,175,225,375,750] # in um
+    numcon = [4.59,66.21,22.23,11.33,7.87,4.32,3.37,4.57,3.44,4.52,4.31,4.52,3.85,3.45,1.11] # in cm^-3
     #sizeclass = [12,20,28,36,45,62.5,87.5,112.5,137.5,175,225,375,750,1500] # in um
     #numcon = [22.23,11.33,7.87,4.32,3.37,4.57,3.44,4.52,4.31,4.52,3.85,3.45,1.11,0.00] # in cm^-3
     t_settle = []
-    sizepeak = 3 # Just test, not peak
-    for binnum in range(16):
+    sizepeak = 6 # Just test, not peak
+    for binnum in range(15):
         size = sizeclass[binnum]
         count = numcon[binnum]
-        settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
+        if size > 10:
+            settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
+        else:
+            settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_small')    
         t_settle.append(settling_time)
         t_peak = settle.settling_time(T,RH,sizepeak,NaCl_con,1.5,model='empirical_big')
     return(sizeclass,numcon,t_settle,sizepeak,t_peak)
@@ -38,7 +41,10 @@ def coughing(T,RH):
     for binnum in range(16):
         size = sizeclass[binnum]
         count = numcon[binnum]
-        settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
+        if size > 10:
+            settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
+        else:
+            settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_small')
         t_settle.append(settling_time)
         t_peak = settle.settling_time(T,RH,sizepeak,NaCl_con,1.5,model='empirical_big')
     return(sizeclass,numcon,t_settle,sizepeak,t_peak)
@@ -58,7 +64,7 @@ def coughing(T,RH):
 #     return(sizeclass,numcon,t_settle)
 
 def sknorm(x,A,mu,sig):
-    yfit = A*np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
+    yfit = A*np.exp(-(x - mu)**2 / (2 * sig**2))
     #normpdf = (1/(sig*np.sqrt(2*math.pi)))*np.exp(-(np.power((x-mu),2)/(2*np.power(sig,2))))
     #normcdf = (0.5*(1+sp.erf((alpha*((x-mu)/sig))/(np.sqrt(2)))))
     #return 2*A*normpdf*normcdf + c
@@ -69,27 +75,12 @@ def gfit(x,y,parameters):
     A = parameters[0]
     mu = parameters[1]
     sig = parameters[2]
-    yfit = A*np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
+    yfit = A*np.exp(-(x - mu)**2 / (2 * sig**2))
     residuals = y - yfit
     ss_res = np.sum(residuals**2)
     ss_tot = np.sum((y-np.mean(y))**2)
     rsq = 1 - (ss_res / ss_tot)
     return rsq
-
-
-# In[73]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 

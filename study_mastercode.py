@@ -14,6 +14,7 @@ import math
 import module_weather
 import module_initsize
 import module_covidstats
+import module_riskfactor
 import viability
 
 import timeseries #AG
@@ -21,10 +22,10 @@ import timeseries #AG
 
 
 # Input section: county to be studied, weather date range, transmission mode
-countyname = 'Los Angeles County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
-offset = 6
+countyname = 'Miami-Dade County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
+offset = 0
 input_date0 = '4/1/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
-input_date1 = '4/25/20'
+input_date1 = '4/16/20'
 mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
 
@@ -48,6 +49,7 @@ module_weather.weatherdatapplot(tempC,RH)
 
 tset = []
 viab_hl = []
+risk_fac = []
 
 for day in range(len(tempC)):
     daily_T = tempC[day]
@@ -67,6 +69,12 @@ for day in range(len(tempC)):
     decay_rate = viability.kdecay(daily_T,daily_RH,0)
     halflife = math.log(2)/decay_rate
     viab_hl.append(halflife)
+    
+    #Calculate risk factor everyday
+    risk = module_riskfactor.riskfactor(daily_T,daily_RH,mode_to_test)
+    risk_fac.append(risk)
+    
+    
 
 plt.plot(tset)
 plt.ylabel('Daily droplet settling time in hr')
@@ -76,6 +84,9 @@ plt.plot(viab_hl)
 plt.ylabel('Daily virus half-life in min')
 plt.show()
 
+plt.plot(risk_fac)
+plt.ylabel('Daily risk factor')
+plt.show()
 
 # Load corresponding COVID-19 data
 [dateseries,cases,activecases,dailynew,nc_perc] = module_covidstats.confirmedcases(countyname,input_date0,input_date1)
@@ -103,9 +114,17 @@ plt.scatter(viab_hl,nc_perc)
 plt.ylabel('Daily percent new cases v.s. virus half-life')
 plt.show()
 
+plt.scatter(risk_fac,dailynew)
+plt.ylabel('Daily new confirmed cases v.s. risk factor')
+plt.show()
+
+plt.scatter(risk_fac,nc_perc)
+plt.ylabel('Daily percent new cases v.s. risk factor')
+plt.show()
+
 
 # Compile and output into a CSV file
-outputdata = [tset,viab_hl,nc_perc]
+outputdata = [tset,viab_hl,risk_fac,nc_perc]
 #print(outputdata)
 
 
@@ -123,7 +142,7 @@ savetxt('output.csv', outputdata, delimiter=',')
 #AG
 print('offset by %.2i days' % offset)
 # def comparison(data1[array], data2[array], offset[days]):
-[corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(tset,nc_perc,offset)
+[corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(risk_fac,nc_perc,offset)
 print('Pearsons correlation: %.3f' % corr_pearson)
 print('Pearsons p value: %.3f' % pval_pearson)
 print('Spearmans correlation: %.3f' % corr_spearman)

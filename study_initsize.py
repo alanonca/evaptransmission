@@ -27,11 +27,11 @@ for condT in range(len(T_range)): # Study the effect of varying temperature with
     T = T_range[condT]
     RH = 50
     if mode_to_test == 'speaking':
-        [sizeclass,numcon,t_settle,sizepeak] = module_initsize.speaking(T,RH)
+        [sizeclass,numcon,t_settle,sizepeak,t_peak] = module_initsize.speaking(T,RH)
     elif mode_to_test == 'coughing':
-        [sizeclass,numcon,t_settle,sizepeak] = module_initsize.coughing(T,RH)
+        [sizeclass,numcon,t_settle,sizepeak,t_peak] = module_initsize.coughing(T,RH)
     elif mode_to_test == 'breathing':
-        [sizeclass,numcon,t_settle,sizepeak] = module_initsize.breathing(T,RH)
+        [sizeclass,numcon,t_settle,sizepeak,t_peak] = module_initsize.breathing(T,RH)
     c = colors[condT]
     #p0 = [67,0.00093,-0.00035]
     popt, pcov = curve_fit(module_initsize.sknorm, t_settle, numcon)
@@ -56,11 +56,11 @@ for condRH in range(len(RH_range)): # Study the effect of varying RH with fixed 
     T = 25
     RH = RH_range[condRH]
     if mode_to_test == 'speaking':
-        [sizeclass,numcon,t_settle,sizepeak] = module_initsize.speaking(T,RH)
+        [sizeclass,numcon,t_settle,sizepeak,t_peak] = module_initsize.speaking(T,RH)
     elif mode_to_test == 'coughing':
-        [sizeclass,numcon,t_settle,sizepeak] = module_initsize.coughing(T,RH)
+        [sizeclass,numcon,t_settle,sizepeak,t_peak] = module_initsize.coughing(T,RH)
     elif mode_to_test == 'breathing':
-        [sizeclass,numcon,t_settle,sizepeak] = module_initsize.breathing(T,RH)
+        [sizeclass,numcon,t_settle,sizepeak,t_peak] = module_initsize.breathing(T,RH)
     c = colors[condRH]
     #p0 = [67,0.00093,-0.00035]
     popt, pcov = curve_fit(module_initsize.sknorm, t_settle, numcon)

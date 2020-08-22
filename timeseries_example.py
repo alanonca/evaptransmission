@@ -41,3 +41,5 @@ fig_forecast = timeseries.three(df, 4, trainTestSplit=False, forecastDays=10)
 
 # show fig_current, fig_split and fig_forecast
 plt.show() 
+
+# test

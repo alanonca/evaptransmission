@@ -22,10 +22,10 @@ import timeseries #AG
 
 
 # Input section: county to be studied, weather date range, transmission mode
-countyname = 'Miami-Dade County' # Input 'King County' , 'Los Angeles County' , or 'Miami-Dade County'
+countyname = 'Harris County' # Input 'King County' , 'Los Angeles County' , 'Miami-Dade County', 'Maricopa County', or 'Harris County' 
 offset = 0
 input_date0 = '4/1/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
-input_date1 = '4/16/20'
+input_date1 = '4/29/20'
 mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
 
@@ -38,7 +38,11 @@ elif countyname == 'King County':
     filename = 'KCweather.csv'
 elif countyname == 'Miami-Dade County':
     filename = 'MIAweather.csv'
-
+elif countyname  == 'Maricopa County':
+    filename = 'MARIweather.csv'
+elif countyname  == 'Harris County':
+    filename = 'HARweather.csv'
+    
 [tempC,RH] = module_weather.weatherdataprocess(filename,input_date0,input_date1) 
 
 module_weather.weatherdatapplot(tempC,RH)
@@ -71,7 +75,7 @@ for day in range(len(tempC)):
     viab_hl.append(halflife)
     
     #Calculate risk factor everyday
-    risk = module_riskfactor.riskfactor(daily_T,daily_RH,mode_to_test)
+    risk = module_riskfactor.riskfactor2(daily_T,daily_RH,mode_to_test)
     risk_fac.append(risk)
     
     
@@ -124,7 +128,8 @@ plt.show()
 
 
 # Compile and output into a CSV file
-outputdata = [tset,viab_hl,risk_fac,nc_perc]
+# outputdata = [tset,viab_hl,risk_fac,nc_perc]
+outputdata = [tset,viab_hl,nc_perc]
 #print(outputdata)
 
 
@@ -142,7 +147,7 @@ savetxt('output.csv', outputdata, delimiter=',')
 #AG
 print('offset by %.2i days' % offset)
 # def comparison(data1[array], data2[array], offset[days]):
-[corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(risk_fac,nc_perc,offset)
+[corr_pearson, pval_pearson, corr_spearman, pval_spearman] = timeseries.comparison(tset,nc_perc,offset)
 print('Pearsons correlation: %.3f' % corr_pearson)
 print('Pearsons p value: %.3f' % pval_pearson)
 print('Spearmans correlation: %.3f' % corr_spearman)

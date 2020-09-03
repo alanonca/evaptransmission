@@ -89,6 +89,64 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		return [fig_current, fig_split]
 	
 
+def four(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, VARorderselect='aic'):
+	# get training and test dataframes
+	if trainTestSplit:
+		df_train, df_test = df[0:-splitLastxRows], df[-splitLastxRows:]
+	else:
+		df_train = df
+
+	# stationary test
+	if stationaryTest:
+		for col in range(4):
+			print("Stationary test for column # " + str(col))
+			testdf=df_train.iloc[:,col]
+			stationary(testdf)
+			print('------------------------------------')
+
+	# model fitting using all data (ad)
+	# print(df)
+	model_ad = VAR(df)
+	results_ad = model_ad.fit(maxlags=maxOffset, ic=VARorderselect)
+
+	lag_order = results_ad.k_ar
+	print(lag_order)
+
+	if not trainTestSplit:
+		print(results_ad.summary())
+
+		#plot forecast
+		results_ad.forecast(df.values[-lag_order:], forecastDays)
+		fig_forecast = results_ad.plot_forecast(forecastDays)
+
+		return fig_forecast
+
+	else:
+		#plot current
+		results_ad.forecast(df.values[-lag_order:], 0)
+		fig_current = results_ad.plot_forecast(0)
+
+		#parameters for training and test split
+		forecastDays = splitLastxRows
+
+		# model fitting
+		model = VAR(df_train)
+		results = model.fit(maxlags=maxOffset, ic=VARorderselect)
+		print(results.summary())
+
+		# forecast
+		lag_order = results.k_ar
+		results.forecast(df.values[-lag_order:], forecastDays)
+
+		# plot forecast
+		fig_split = results.plot_forecast(forecastDays)
+
+		# evaluate forecast
+		fevd = results.fevd(maxOffset)
+		fevd.summary()
+
+		return [fig_current, fig_split]
+
 # Augmented Dickey-Fuller Test (ADF Test) / unit root test
 def stationary(col, signif=0.05):
     dftest = adfuller(col, autolag='AIC')

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 macrodata = sm.datasets.macrodata.load_pandas().data
 df_this_is_long_enough_to_run_timeseries_three = macrodata.iloc[:, 2:5]
 
-# read output.csv as dataframe; this dataset is currently not long enough to get results from timeseries.three
+# read output.csv as dataframe
 df_csv = pd.read_csv('output_Maricopa.csv', header=None)
 df = df_csv.T # transpose
 df.columns = ['tset', 'viability', 'ncperc']

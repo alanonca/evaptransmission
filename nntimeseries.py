@@ -332,48 +332,89 @@ class NeuralNetwork:
 
 # end class NeuralNetwork
 
-def main(df, offset, numInput, numHidden, maxEpochs, learnRate):
+def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=False, lastxRowForTest=0):
+
+  dfo = df #save a copy of the original df
 
   # offset ncperc row later 
   df2 = df.shift(periods=offset)
   df.ncperc = df2.ncperc
   df = df.iloc[offset:]
 
-  # convert df from pandas df to numpy.dfarray
-  dfarray = df.to_numpy()
-  # print(dfarray)
-  # print(type(dfarray))
+  if TrainTestSplit:
 
-  # proceed with training and evaluation
-  np.set_printoptions(formatter = \
-    {'float': '{: 0.2f}'.format})
-  # print("First four rows of rolling window data: ")
-  # print(dfarray[range(0,4),])
+    #test training split
+    dftrain = df.head(df.shape[0]-lastxRowForTest)
+    dftest = df.tail(lastxRowForTest)
+    # print(dftrain)
+    # print(dftest)
 
-  numOutput = 1
-  print("\nCreating a %d-%d-%d neural network " %
-    (numInput, numHidden, numOutput) )
-  nn = NeuralNetwork(numInput, numHidden,
-    numOutput, seed=0)
+    # convert df from pandas df to numpy.dfarray
+    dftrainArray = dftrain.to_numpy()
+    # dftestArray = dftest.to_numpy()
 
-  print("\nSetting maxEpochs = " + str(maxEpochs))
-  print("Setting learning rate = %0.3f " % learnRate)
-  print("\nStarting training")
-  nn.train(dfarray, maxEpochs, learnRate)
-  print("Training complete \n")
+    # proceed with training and evaluation
+    np.set_printoptions(formatter = \
+      {'float': '{: 0.2f}'.format})
 
-  # accTrain = nn.accuracy(trainDataMatrix)
-  # accTest = nn.accuracy(testDataMatrix)
+    numOutput = 1
+    print("\nCreating a %d-%d-%d neural network " %(numInput, numHidden, numOutput) )
+    nn = NeuralNetwork(numInput, numHidden, numOutput, seed=0)
 
-  print("First few data points: actual-predicted: ")
-  acc = nn.accuracy(dfarray, 0.01) #count predction true if dff within 1%
+    print("\nSetting maxEpochs = " + str(maxEpochs))
+    print("Setting learning rate = %0.6f " % learnRate)
+    print("\nStarting training")
+    nn.train(dftrainArray, maxEpochs, learnRate)
+    print("Training complete \n")
 
-  print("\nAccuracy on data = %0.4f " % acc)
+    print("First few data points: actual-predicted: ")
+    acc = nn.accuracy(dftrainArray, 0.01) #count predction true if dff within 1%
 
-  nextPred = nn.computeOutputs([6.14228291e+00, 2.44479476e+01])
-  print("\nNext prediction = %1.3f " %nextPred)
+    print("\nAccuracy on data (using train data only) = %0.4f \n" % acc)
 
-  print("\nEnd demo \n")
+    # make predictions
+    for i in range(lastxRowForTest):
+      row = dftest.iloc[(i)].to_numpy()
+      rowLessLastElement = row[:-1]
+      print(rowLessLastElement)
+      nextPred = nn.computeOutputs(rowLessLastElement)
+      print("%1.0fth test data row prediction (using test data) = %1.6f " %(i, nextPred))
+
+  else:
+    # convert df from pandas df to numpy.dfarray
+    dfarray = df.to_numpy()
+
+    # proceed with training and evaluation
+    np.set_printoptions(formatter = \
+      {'float': '{: 0.2f}'.format})
+    # print("First four rows of rolling window data: ")
+    # print(dfarray[range(0,4),])
+
+    numOutput = 1
+    print("\nCreating a %d-%d-%d neural network " %(numInput, numHidden, numOutput) )
+    nn = NeuralNetwork(numInput, numHidden, numOutput, seed=0)
+
+    print("\nSetting maxEpochs = " + str(maxEpochs))
+    print("Setting learning rate = %0.6f " % learnRate)
+    print("\nStarting training")
+    nn.train(dfarray, maxEpochs, learnRate)
+    print("Training complete \n")
+
+    print("First few data points: actual-predicted: ")
+    acc = nn.accuracy(dfarray, 0.01) #count predction true if dff within 1%
+
+    print("\nAccuracy on data = %0.4f " % acc)
+
+    # # make predictions
+    # for i in range(offset):
+    #   row = df.iloc[-(i+1)].to_numpy()
+    #   rowLessLastElement = row[:-1]
+    #   print("\n")
+    #   print(rowLessLastElement)
+    #   nextPred = nn.computeOutputs(rowLessLastElement)
+    #   print("%1.0fth last row prediction = %1.6f " %(i+1, nextPred))
+
+  print("\nEnd model \n")
 
 # end script
 

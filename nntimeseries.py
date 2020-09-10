@@ -367,18 +367,27 @@ def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=F
     nn.train(dftrainArray, maxEpochs, learnRate)
     print("Training complete \n")
 
-    print("First few data points: actual-predicted: ")
-    acc = nn.accuracy(dftrainArray, 0.01) #count predction true if dff within 1%
+    # print("First few data points: actual-predicted: ")
+    # acc = nn.accuracy(dftrainArray, 0.01) #count predction true if dff within 1%
 
-    print("\nAccuracy on data (using train data only) = %0.4f \n" % acc)
+    # print("\nAccuracy on data (using train data only) = %0.4f \n" % acc)
 
-    # make predictions
-    for i in range(lastxRowForTest):
-      row = dftest.iloc[(i)].to_numpy()
+    # check fitting and make predictions
+    print("\nCheck fitting and make predictions")
+    for i in range(df.shape[0]):
+      row = df.iloc[(i)].to_numpy()
       rowLessLastElement = row[:-1]
-      print(rowLessLastElement)
       nextPred = nn.computeOutputs(rowLessLastElement)
-      print("%1.0fth test data row prediction (using test data) = %1.6f " %(i, nextPred))
+      print("%1.6f " %nextPred)
+    print("\bFitting check complete. Last %1.0f elements are predictions." %lastxRowForTest)
+
+    # # make predictions
+    # for i in range(lastxRowForTest):
+    #   row = dftest.iloc[(i)].to_numpy()
+    #   rowLessLastElement = row[:-1]
+    #   print(rowLessLastElement)
+    #   nextPred = nn.computeOutputs(rowLessLastElement)
+    #   print("%1.0fth test data row prediction (using test data) = %1.6f " %(i, nextPred))
 
   else:
     # convert df from pandas df to numpy.dfarray

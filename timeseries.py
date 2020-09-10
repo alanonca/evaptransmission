@@ -32,7 +32,8 @@ def comparison(data1, data2, offset):
 
 	return [corrp, pvalp, corrs, pvals]
 
-def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, VARorderselect='aic'):
+def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, 
+	VARorderselect='aic'):
 	# get training and test dataframes
 	if trainTestSplit:
 		df_train, df_test = df[0:-splitLastxRows], df[-splitLastxRows:]
@@ -51,6 +52,8 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 	# print(df)
 	model_ad = VAR(df)
 	results_ad = model_ad.fit(maxlags=maxOffset, ic=VARorderselect)
+
+	# print(results_ad.params)
 
 	lag_order = results_ad.k_ar
 	print(lag_order)
@@ -91,7 +94,8 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		return [fig_current, fig_split]
 	
 
-def four(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, VARorderselect='aic'):
+def four(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, 
+	VARorderselect='aic'):
 	# get training and test dataframes
 	if trainTestSplit:
 		df_train, df_test = df[0:-splitLastxRows], df[-splitLastxRows:]

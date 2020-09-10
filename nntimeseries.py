@@ -367,10 +367,10 @@ def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=F
     nn.train(dftrainArray, maxEpochs, learnRate)
     print("Training complete \n")
 
-    # print("First few data points: actual-predicted: ")
-    # acc = nn.accuracy(dftrainArray, 0.01) #count predction true if dff within 1%
+    print("First few data points: actual-predicted: ")
+    acc = nn.accuracy(dftrainArray, 0.02) #count predction true if dff within 2%
 
-    # print("\nAccuracy on data (using train data only) = %0.4f \n" % acc)
+    print("\nAccuracy on data (using train data only) = %0.4f \n" % acc)
 
     # check fitting and make predictions
     print("\nCheck fitting and make predictions")

@@ -10,5 +10,5 @@ for csvName in ['output_Clark_arL4.csv', 'output_Harris_arL4.csv', 'output_King_
 	df.columns = ['tsetL0', 'viabilityL0', 'tsetL1', 'viabilityL1', 'tsetL2', 'viabilityL2', 
 		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4', 'ncperc']
 
-	nntimeseries.main(df, offset=0, numInput=10, numHidden=20, maxEpochs=1e2, learnRate=1e-5, 
+	nntimeseries.main(df, offset=0, numInput=10, numHidden=50, maxEpochs=5e5, learnRate=1e-4, 
 		TrainTestSplit=True, lastxRowForTest=4)

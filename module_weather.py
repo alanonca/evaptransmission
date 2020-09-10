@@ -33,7 +33,7 @@ def weatherdataprocess(filename,input_date0,input_date1):
     tempdata = []
     RHdata = []
     
-    for num in range(num_records-1): # modified here to use only febuary part of the data
+    for num in range(num_records-1): 
         pull_a_record = recorddata[num]
         d_rec = np.fromstring(pull_a_record[1], dtype=int, sep="-")
         drec = date(d_rec[0],d_rec[1],d_rec[2])

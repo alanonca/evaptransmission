@@ -87,6 +87,10 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		# plot forecast
 		fig_split = results.plot_forecast(forecastDays)
 
+		# print forcast interval
+		# print(df.values[-lag_order:])
+		print(results.forecast_interval(df.values[-lag_order:], forecastDays))
+
 		# evaluate forecast
 		fevd = results.fevd(maxOffset)
 		fevd.summary()
@@ -143,6 +147,7 @@ def four(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows
 		# forecast
 		lag_order = results.k_ar
 		results.forecast(df.values[-lag_order:], forecastDays)
+		print(results)
 
 		# plot forecast
 		fig_split = results.plot_forecast(forecastDays)

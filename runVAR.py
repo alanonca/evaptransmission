@@ -12,7 +12,7 @@ df.columns = ['tset', 'viability', 'ncperc']
 # plt.show()
 
 print("LA")
-df_csv = pd.read_csv('output_LA.csv', header=None)
+df_csv = pd.read_csv('output_LA_new.csv', header=None)
 df = df_csv.T # transpose
 df.columns = ['tset', 'viability', 'ncperc']
 [fig_current, fig_split] = timeseries.three(df, 4, stationaryTest=True, trainTestSplit=True, splitLastxRows=4)

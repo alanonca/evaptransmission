@@ -11,20 +11,19 @@ def trainTestSplit(df, lastxRowForTest, filename=None):
     dftrain = df.head(df.shape[0]-lastxRowForTest)
     dftest = df.tail(lastxRowForTest)
 
+    # print(df)
+    # print(dftest)
+
     Xtrain = dftrain.iloc[:,:-1]
     Ytrain = dftrain.iloc[:,-1]
     Xtest = dftest.iloc[:,:-1]
     Ytest = dftest.iloc[:,-1]
+    Xall = df.iloc[:,:-1]
     
     # train
     model = sm.OLS(Ytrain, Xtrain).fit()
     print_model = model.summary().as_csv()
     print(print_model)
-
-    # # write to filename
-    # f = open(filename+"ARLRoutput.csv", "w")
-    # f.write(print_model)
-    # f.close()
 
     # test
     predictions = model.predict(Xtest) 
@@ -51,9 +50,18 @@ def trainTestSplit(df, lastxRowForTest, filename=None):
     # print(predict_ci_low)
     # print(predict_ci_upp)
 
-    # get prediction interval 2
-    predictions2 = model.get_prediction(Xtest)
-    print(predictions2.summary_frame(alpha=0.05))
+    # get prediction interval for all Xs
+    # predictions2 = model.get_prediction(Xtest)
+    # print(predictions2.summary_frame(alpha=0.05))
+    predictions2 = model.get_prediction(Xall)
+    predictions2df = predictions2.summary_frame(alpha=0.05)
+    print(predictions2df)
+
+    # write to filename
+    f = open(filename+"_ARLR_SummaryTable.csv", "w")
+    f.write(print_model)
+    f.close()
+    predictions2df.to_csv(filename+"_ARLR_Predictions.csv")
 
 def regOnly(df):
     df = sm.add_constant(df) # adding a constant

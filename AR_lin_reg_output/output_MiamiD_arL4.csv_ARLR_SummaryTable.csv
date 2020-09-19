@@ -1,0 +1,30 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,ncperc          ,  R-squared:         ,   1.000
+Model:           ,OLS             ,  Adj. R-squared:    ,     nan
+Method:          ,Least Squares   ,  F-statistic:       ,     nan
+Date:            ,Sat, 19 Sep 2020,  Prob (F-statistic):,   nan  
+Time:            ,12:23:52        ,  Log-Likelihood:    ,  285.10
+No. Observations:,     8          ,  AIC:               ,  -554.2
+Df Residuals:    ,     0          ,  BIC:               ,  -553.6
+Df Model:        ,     7          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+           ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+const      ,    0.0002,      inf,        0,   nan,      nan,      nan
+tsetL0     ,    0.0062,      inf,        0,   nan,      nan,      nan
+viabilityL0,   -0.0021,      inf,       -0,   nan,      nan,      nan
+tsetL1     ,   -0.0114,      inf,       -0,   nan,      nan,      nan
+viabilityL1,   -0.0028,      inf,       -0,   nan,      nan,      nan
+tsetL2     ,   -0.0035,      inf,       -0,   nan,      nan,      nan
+viabilityL2,    0.0019,      inf,        0,   nan,      nan,      nan
+tsetL3     ,    0.0006,      inf,        0,   nan,      nan,      nan
+viabilityL3,   -0.0039,      inf,       -0,   nan,      nan,      nan
+tsetL4     ,    0.0107,      inf,        0,   nan,      nan,      nan
+viabilityL4,    0.0086,      inf,        0,   nan,      nan,      nan
+Omnibus:      , 1.391,  Durbin-Watson:     ,   0.162
+Prob(Omnibus):, 0.499,  Jarque-Bera (JB):  ,   0.656
+Skew:         ,-0.042,  Prob(JB):          ,   0.720
+Kurtosis:     , 1.599,  Cond. No.          ,    154.
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The input rank is higher than the number of observations.

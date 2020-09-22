@@ -5,7 +5,7 @@ import nntimeseries
 # 	'output_LA_arL4.csv', 'output_Maricopa_arL4.csv', 'output_MiamiD_arL4.csv', 
 # 	'output_SantaClara_arL4.csv', 'output_SD_arL4.csv']:
 
-for county in ['Harris', 'King']:
+for county in ['Harris', 'King', 'LA', 'Maricopa', 'MiamiD', 'SantaClara', 'SD']:
 	print(county)
 
 	arL4csv = 'output_' + county + '_arL4.csv'
@@ -19,5 +19,5 @@ for county in ['Harris', 'King']:
 	dfContour.columns = ['tsetL0', 'viabilityL0', 'tsetL1', 'viabilityL1', 'tsetL2', 'viabilityL2', 
 		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4']
 
-	nntimeseries.main(df, offset=0, numInput=10, numHidden=70, maxEpochs=1e2, learnRate=1e-4, 
+	nntimeseries.main(df, offset=0, numInput=10, numHidden=70, maxEpochs=1e5, learnRate=1e-4, 
 		TrainTestSplit=True, lastxRowForTest=4, contourProcess = True, dfContour = dfContour)

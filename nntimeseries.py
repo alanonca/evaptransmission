@@ -332,7 +332,8 @@ class NeuralNetwork:
 
 # end class NeuralNetwork
 
-def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=False, lastxRowForTest=0):
+def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=False, lastxRowForTest=0,
+  contourProcess = False, dfContour = None):
 
   dfo = df #save a copy of the original df
 
@@ -380,6 +381,7 @@ def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=F
       nextPred = nn.computeOutputs(rowLessLastElement)
       print("%1.6f " %nextPred)
     print("\bFitting check complete. Last %1.0f elements are predictions." %lastxRowForTest)
+    #
 
     # # make predictions
     # for i in range(lastxRowForTest):
@@ -411,7 +413,6 @@ def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=F
 
     print("First few data points: actual-predicted: ")
     acc = nn.accuracy(dfarray, 0.01) #count predction true if dff within 1%
-
     print("\nAccuracy on data = %0.4f " % acc)
 
     # # make predictions
@@ -422,6 +423,15 @@ def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=F
     #   print(rowLessLastElement)
     #   nextPred = nn.computeOutputs(rowLessLastElement)
     #   print("%1.0fth last row prediction = %1.6f " %(i+1, nextPred))
+
+  if contourProcess:
+    # check fitting and make predictions
+    print("\nContour data output")
+    for i in range(dfContour.shape[0]):
+      row = dfContour.iloc[(i)].to_numpy()
+      nextPred = nn.computeOutputs(row)
+      print("%1.6f " %nextPred)
+    print("\bContour fitting complete.")
 
   print("\nEnd model \n")
 

@@ -2,7 +2,7 @@ import linreg
 import pandas as pd
 
 for csvName in ['output_Clark_arL4.csv', 'output_Harris_arL4.csv', 'output_King_arL4.csv', 
-	'output_LA_arL4.csv', 'output_Maricopa_arL4.csv', 'output_MiamiD_arL4.csv', 
+	'output_LA_new_arL4.csv', 'output_Maricopa_arL4.csv', 'output_MiamiD_arL4.csv', 
 	'output_SantaClara_arL4.csv', 'output_SD_arL4.csv']:
 
 # for csvName in ['output_LA_new_arL4.csv']:

@@ -22,10 +22,10 @@ import timeseries #AG
 
 
 # Input section: county to be studied, weather date range, transmission mode
-countyname = 'Los Angeles County' # Input 'King County' , 'Los Angeles County' , 'Miami-Dade County', 'Maricopa County', 'Harris County', 'San Diego County', 'Clark County', or 'Santa Clara County'.
+countyname = 'Santa Clara County' # Input 'King County' , 'Los Angeles County' , 'Miami-Dade County', 'Maricopa County', 'Harris County', 'San Diego County', 'Clark County', or 'Santa Clara County'.
 offset = 0
-input_date0 = '4/1/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
-input_date1 = '4/29/20'
+input_date0 = '5/1/20' # for weather data range. Avoid 3/8 for LA in the time range, no RH data for that day.
+input_date1 = '5/29/20'
 mode_to_test = 'speaking' # Input'speaking','coughing', or 'breathing'
 
 

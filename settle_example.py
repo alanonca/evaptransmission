@@ -1,14 +1,12 @@
 import settle
 
-# input T[C], RH[%], d0[um], cNaCl[mol/L], fall_height[m], model='empirical_small'
-# default model selection of empirical model for droplet diameter <10um, also works for big droplet with ~40% error
+# input T[C], RH[%], d0[um], cNaCl[mol/L], fall_height[m], model='sc'
+# default model selection of stokes cunningham
 # output settling time [hr]
-t_stl = settle.settling_time(25,90,10,0.05,1.5)
+t_stl = settle.settling_time(25,90,10,0.08,1.5,'sc')
 print(t_stl)
 print(type(t_stl))
 
-# recommend param setting model='empirical_big' if all droplets >10um
-# doesn't quite work with small droplets with >150% error for <5um
-# model param options: 'empirical_small', 'empirical_big', 'epstein'
-t_stl2 = settle.settling_time(15,50,50,0.05,1.5,model='empirical_big')
-print(t_stl2)
+# model parameter takes other arguments
+t_stl = settle.settling_time(25,90,10,0.08,1.5,'epstein')
+

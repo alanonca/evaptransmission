@@ -9,17 +9,31 @@ import numpy as np
 
 R = 8.3145
 
-def settling_time(T, RH, d0, cNaCl, fall_height, model='empirical_small'):
+def settling_time(T, RH, d0, cNaCl, fall_height, model='sc'):
 	r_eq = kohler(T, RH, d0, cNaCl) #m
 	# print('size =' + str(r_eq*2*1e6))
 	# print('kholer size in nm=' + str(r_eq*1e9))
 
+	# get rho_p after evaporation [kg/m3]
+	totalV = 4/3*math.pi*r_eq**3
+	V_NaCl = 4/3*math.pi*r_dry_NaCl(d0, cNaCl)**3
+	m_H2O = (totalV - V_NaCl) * 1000
+	m_NaCl = V_NaCl * 2160
+	totalm = m_NaCl+m_H2O
+	rho_p = get_rho_p_recur(m_NaCl, totalm, totalV, T) #recursion to get rho_p
+
+	print(r_eq*2*1e6)
+	print(rho_p)
+
+	# both empirical models assume 1.8g/cm3 density
 	if model == 'empirical_small':
 		settle_v = empirical_small_v(r_eq*2*1e6)/1e3 #m/s
 	elif model == 'empirical_big':
 		settle_v = empirical_big_v(r_eq*2*1e6)/1e3 #m/s
 	elif model == 'epstein':
-		settle_v = epstein_v(T, r_eq) #m/s
+		settle_v = epstein_v(T, r_eq, rho_p) #m/s
+	elif model == 'sc':
+		settle_v = stokes_cunningham(T+273.15, r_eq*2, rho_p)
 	else:
 		print('invalid model selection in settling_time param input')
 
@@ -28,6 +42,61 @@ def settling_time(T, RH, d0, cNaCl, fall_height, model='empirical_small'):
 	settle_t = fall_height/settle_v #s
 
 	return settle_t/3600 #hr
+
+def get_rho_p_recur(m_NaCl, totalm, totalV, T):
+	NaCl_wtperc = m_NaCl / totalm
+	rho_p = rho_NaCl_soln(T+273.15, NaCl_wtperc)
+	err = abs(rho_p / (totalm/totalV) - 1)
+	# print(err)
+
+	if err>0.001: #if error larger than 0.1%
+		totalm = totalV * rho_p
+		rho_p = get_rho_p_recur(m_NaCl, totalm, totalV, T)
+
+	return rho_p
+
+def stokes_cunningham(T, Dp, rho_p):
+	# temperature in K, particle diametre in m, density of particle in kg/m3 (all SI units)
+	
+	mu_air = 1.81e-5 # SI unit
+	g = 9.8
+
+	v_terminal = rho_p*Dp**2*g/(18*mu_air)
+
+	# apply cunningham if Re < 1
+	Re = Re_atm(rho_p, v_terminal, Dp)
+	if Re < 1:
+		Kn = Kn_atm(T, Dp)
+		correctionFactor = 1 + 2.52*Kn
+		v_terminal = v_terminal * correctionFactor
+
+	return v_terminal
+
+def Re_atm(rho_p, v, Dp):
+	# density of particle, velocity, particle diametre in SI units
+	# in air
+
+	mu_air = 1.81e-5 # SI unit
+	Re = rho_p*v*Dp/mu_air
+	return Re
+
+def Kn_atm(T, Dp):
+	# T in K, Dp in m
+	# for air in atmospheric pressure
+
+	NoverV = 101325/8.3145/T*6.022e23 #molecules per volume
+	meanFreePath = 1/(math.sqrt(2)*math.pi*(3.1e-10)**2*NoverV) 
+
+	return meanFreePath/Dp
+
+def rho_NaCl_soln(T, wtperc):
+	# T in K, wtperc in weight percent concentration
+	# https://www.researchgate.net/publication/280063894_Mathematical_modelling_of_density_and_viscosity_of_NaCl_aqueous_solutions
+	A1 = 750.2834 + 26.7822*wtperc - 0.26389*wtperc**2
+	A2 = 1.90165 - 0.11734*wtperc + 0.00175*wtperc**2
+	A3 = -0.003604 + 0.0001701*wtperc - 0.00000261*wtperc**2
+	rho = A1 + A2*T + A3*T**2
+	return rho
 
 def empirical_small_v(d):
 	# input diameter in um, output U in mm/s
@@ -42,19 +111,19 @@ def empirical_big_v(d):
 	U = 0.0131*d**2 - 0.0746 * d + 0.1123
 	return U
 
-def epstein_v(T, r):
-	# [C] and [m]
+def epstein_v(T, r, rho_p):
+	# [C] and [m], and [kg/m3]
 	# Jakobsen 2019 equation 7
+	# atmospheric pressure
 	# k = 1.38064852e-23
 	# N_A = 6.02214086e23
-	P = 2.37*1e-3*1e5 #[Pa]
+	P = 101325 #[Pa]
 	g = 9.8
 	R = 8.3145
-	MW_air = 28.9647
+	MW_air = 28.9647e3
 	c_bar = math.sqrt(8*R*(T+273.15)/(math.pi*MW_air))
 
 	delta = 1.18 # Jakobsen 2019 table 2 and fig 4, can be imporoved as f(size)
-	rho_p = 2.65e3 # particle density need to change for salt water density [kg/m3]
 	rho_air = P*MW_air*1e-3/(R*(T+273.15)) #ideal gas law, constant P, [kg/m3]
 
 	U = rho_p*g*r/(rho_air*c_bar*delta) #m/s
@@ -82,10 +151,10 @@ def kohler(T, RH, d0, cNaCl):
 	epsilon_root = epsilon_roots[~np.iscomplex(epsilon_roots)]
 	epsilon = epsilon_root[0].real.item() #item function converts numpy.float to float
 
-	print(coeff)
-	print(epsilon_roots)
-	print(epsilon_root)
-	print(epsilon)
+	# print(coeff)
+	# print(epsilon_roots)
+	# print(epsilon_root)
+	# print(epsilon)
 
 	r_wet = r_dry*epsilon
 

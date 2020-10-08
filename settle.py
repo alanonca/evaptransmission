@@ -22,9 +22,6 @@ def settling_time(T, RH, d0, cNaCl, fall_height, model='sc'):
 	totalm = m_NaCl+m_H2O
 	rho_p = get_rho_p_recur(m_NaCl, totalm, totalV, T) #recursion to get rho_p
 
-	print(r_eq*2*1e6)
-	print(rho_p)
-
 	# both empirical models assume 1.8g/cm3 density
 	if model == 'empirical_small':
 		settle_v = empirical_small_v(r_eq*2*1e6)/1e3 #m/s
@@ -66,7 +63,7 @@ def stokes_cunningham(T, Dp, rho_p):
 	# apply cunningham if Re < 1
 	Re = Re_atm(rho_p, v_terminal, Dp)
 	if Re < 1:
-		Kn = Kn_atm(T, Dp)
+		Kn = Kn_atm_p(T, Dp)
 		correctionFactor = 1 + 2.52*Kn
 		v_terminal = v_terminal * correctionFactor
 
@@ -80,7 +77,7 @@ def Re_atm(rho_p, v, Dp):
 	Re = rho_p*v*Dp/mu_air
 	return Re
 
-def Kn_atm(T, Dp):
+def Kn_atm_p(T, Dp):
 	# T in K, Dp in m
 	# for air in atmospheric pressure
 
@@ -88,6 +85,15 @@ def Kn_atm(T, Dp):
 	meanFreePath = 1/(math.sqrt(2)*math.pi*(3.1e-10)**2*NoverV) 
 
 	return meanFreePath/Dp
+
+def Kn_atm_air(T):
+	# T in K
+	# for air in atmospheric pressure
+
+	NoverV = 101325/8.3145/T*6.022e23 #molecules per volume
+	meanFreePath = 1/(math.sqrt(2)*math.pi*(3.1e-10)**2*NoverV) 
+
+	return meanFreePath/3.1e-10
 
 def rho_NaCl_soln(T, wtperc):
 	# T in K, wtperc in weight percent concentration

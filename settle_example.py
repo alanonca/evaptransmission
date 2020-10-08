@@ -9,4 +9,9 @@ print(type(t_stl))
 
 # model parameter takes other arguments
 t_stl = settle.settling_time(25,90,10,0.08,1.5,'epstein')
+print(t_stl)
+print(type(t_stl))
 
+# get Knudsen number of air
+for T in [273, 278, 283, 288, 293, 298, 303, 308, 313]:
+	print(settle.Kn_atm_air(T))

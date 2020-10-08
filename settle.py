@@ -60,12 +60,10 @@ def stokes_cunningham(T, Dp, rho_p):
 
 	v_terminal = rho_p*Dp**2*g/(18*mu_air)
 
-	# apply cunningham if Re < 1
-	Re = Re_atm(rho_p, v_terminal, Dp)
-	if Re < 1:
-		Kn = Kn_atm_p(T, Dp)
-		correctionFactor = 1 + 2.52*Kn
-		v_terminal = v_terminal * correctionFactor
+	# apply cunningham
+	Kn = Kn_atm_p(T, Dp)
+	correctionFactor = 1 + 2.52*Kn
+	v_terminal = v_terminal * correctionFactor
 
 	return v_terminal
 

@@ -1,0 +1,31 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,ncperc          ,  R-squared:         ,   0.119
+Model:           ,OLS             ,  Adj. R-squared:    ,  -0.030
+Method:          ,Least Squares   ,  F-statistic:       ,  0.7958
+Date:            ,Wed, 07 Oct 2020,  Prob (F-statistic):, 0.633  
+Time:            ,16:18:02        ,  Log-Likelihood:    ,  160.19
+No. Observations:,    70          ,  AIC:               ,  -298.4
+Df Residuals:    ,    59          ,  BIC:               ,  -273.6
+Df Model:        ,    10          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+           ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+const      ,    0.3183,    0.192,    1.662, 0.102,   -0.065,    0.702
+tsetL0     ,    0.0218,    0.030,    0.728, 0.469,   -0.038,    0.082
+viabilityL0,    0.0010,    0.001,    1.335, 0.187,   -0.000,    0.002
+tsetL1     ,    0.0028,    0.048,    0.058, 0.954,   -0.093,    0.098
+viabilityL1,    0.0002,    0.001,    0.164, 0.870,   -0.002,    0.002
+tsetL2     ,   -0.0292,    0.049,   -0.601, 0.550,   -0.126,    0.068
+viabilityL2,   -0.0005,    0.001,   -0.492, 0.624,   -0.003,    0.002
+tsetL3     ,   -0.0353,    0.049,   -0.715, 0.477,   -0.134,    0.064
+viabilityL3,   -0.0003,    0.001,   -0.301, 0.764,   -0.003,    0.002
+tsetL4     ,   -0.0010,    0.035,   -0.029, 0.977,   -0.072,    0.070
+viabilityL4,   -0.0002,    0.001,   -0.231, 0.818,   -0.002,    0.001
+Omnibus:      , 4.234,  Durbin-Watson:     ,   1.746
+Prob(Omnibus):, 0.120,  Jarque-Bera (JB):  ,   4.561
+Skew:         ,-0.180,  Prob(JB):          ,   0.102
+Kurtosis:     , 4.197,  Cond. No.          ,8.00e+03
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large,  8e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

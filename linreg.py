@@ -54,7 +54,7 @@ def trainTestSplit(df, lastxRowForTest, filename=None):
     # predictions2 = model.get_prediction(Xtest)
     # print(predictions2.summary_frame(alpha=0.05))
     predictions2 = model.get_prediction(Xall)
-    predictions2df = predictions2.summary_frame(alpha=0.05)
+    predictions2df = predictions2.summary_frame(alpha=0.17)
     print(predictions2df)
 
     # write to filename

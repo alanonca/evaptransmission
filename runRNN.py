@@ -2,7 +2,7 @@ import pandas as pd
 import nntimeseries
 
 # for county in ['Harris', 'King', 'LA', 'Maricopa', 'MiamiD', 'SantaClara', 'SD']:
-for county in ['LA_Apr_to_Jul']:
+for county in ['Maricopa_May_to_Aug']:
 	print(county)
 
 	arL4csv = 'output_' + county + '_arL4.csv'

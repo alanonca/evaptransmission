@@ -82,6 +82,11 @@ def kohler(T, RH, d0, cNaCl):
 	epsilon_root = epsilon_roots[~np.iscomplex(epsilon_roots)]
 	epsilon = epsilon_root[0].real.item() #item function converts numpy.float to float
 
+	print(coeff)
+	print(epsilon_roots)
+	print(epsilon_root)
+	print(epsilon)
+
 	r_wet = r_dry*epsilon
 
 	return r_wet #m

@@ -5,7 +5,8 @@ import pandas as pd
 # 	'output_LA_new_arL4.csv', 'output_Maricopa_arL4.csv', 'output_MiamiD_arL4.csv', 
 # 	'output_SantaClara_arL4.csv', 'output_SD_arL4.csv']:
 
-for csvName in ['output_LA_Apr_to_Jul_arL4.csv']:
+for csvName in ['output_Harris_May_to_Aug_arL4.csv', 'output_King_May_to_Aug_arL4.csv', 
+	'output_Maricopa_May_to_Aug_arL4.csv', 'output_SantaClara_May_to_Aug_arL4.csv']:
 
 	print("\n\n")
 	print(csvName)

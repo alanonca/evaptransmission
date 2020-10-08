@@ -3,7 +3,7 @@ import pandas as pd
 # import statsmodels.api as sm
 # import matplotlib.pyplot as plt
 
-# With interaction term
+# Without interaction term
 print("King")
 df_csv = pd.read_csv('output_King.csv', header=None)
 df = df_csv.T # transpose

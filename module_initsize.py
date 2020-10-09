@@ -20,16 +20,24 @@ def speaking(T,RH):
     #sizeclass = [12,20,28,36,45,62.5,87.5,112.5,137.5,175,225,375,750,1500] # in um
     #numcon = [22.23,11.33,7.87,4.32,3.37,4.57,3.44,4.52,4.31,4.52,3.85,3.45,1.11,0.00] # in cm^-3
     t_settle = []
-    sizepeak = 6 # Just test, not peak
+    sizepeak = 6 
     for binnum in range(15):
         size = sizeclass[binnum]
+        #eqsize = 2*10**6 * settle.kohler(T, RH, size, NaCl_con)
         count = numcon[binnum]
-        if size > 10:
-            settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
-        else:
-            settling_time = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_small')    
-        t_settle.append(settling_time)
-        t_peak = settle.settling_time(T,RH,sizepeak,NaCl_con,1.5,model='empirical_big')
+        settime = settle.settling_time(T,RH,size,NaCl_con,1.5,model='sc')
+        #if eqsize > 10:
+        #    settime = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_big')
+        #else:
+        #    settime = settle.settling_time(T,RH,size,NaCl_con,1.5,model='empirical_small') 
+        #print(eqsize,settime)
+        t_settle.append(settime)
+    t_peak = settle.settling_time(T,RH,sizepeak,NaCl_con,1.5,model='sc')
+    #eqsizepeak = 2*10**6 * settle.kohler(T, RH, sizepeak, NaCl_con)
+    #if eqsizepeak > 10:
+        #t_peak = settle.settling_time(T,RH,sizepeak,NaCl_con,1.5,model='empirical_big')
+    #else:
+        #t_peak = settle.settling_time(T,RH,sizepeak,NaCl_con,1.5,model='empirical_small')    
     return(sizeclass,numcon,t_settle,sizepeak,t_peak)
 
 def coughing(T,RH):

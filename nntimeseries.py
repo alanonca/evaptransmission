@@ -341,7 +341,7 @@ def main(df, offset, numInput, numHidden, maxEpochs, learnRate, TrainTestSplit=F
   df2 = df.shift(periods=offset)
   df.ncperc = df2.ncperc
   df = df.iloc[offset:]
-
+  
   if TrainTestSplit:
 
     #test training split

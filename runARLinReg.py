@@ -1,17 +1,22 @@
 import linreg
 import pandas as pd
 
-# for csvName in ['output_Clark_arL4.csv', 'output_Harris_arL4.csv', 'output_King_arL4.csv', 
-# 	'output_LA_new_arL4.csv', 'output_Maricopa_arL4.csv', 'output_MiamiD_arL4.csv', 
-# 	'output_SantaClara_arL4.csv', 'output_SD_arL4.csv']:
+# Apr + contour
+for county in ['Harris', 'King', 'LA', 'Maricopa', 'SantaClara']:
 
-for csvName in ['output_Harris_May_to_Aug_arL4.csv', 'output_King_May_to_Aug_arL4.csv', 
-	'output_Maricopa_May_to_Aug_arL4.csv', 'output_SantaClara_May_to_Aug_arL4.csv']:
+	arL4csv = '20201008_' + county + '_April_output_arL5.csv'
+	contourcsv = '20201008_contourdata_' + county + '_arL5.csv'
 
 	print("\n\n")
-	print(csvName)
-	df = pd.read_csv(csvName, header=None)
+	print(county)
+
+	df = pd.read_csv(arL4csv, header=None)
+	dfContour = pd.read_csv(contourcsv, header=None)
+
 	df.columns = ['tsetL0', 'viabilityL0', 'tsetL1', 'viabilityL1', 'tsetL2', 'viabilityL2', 
-		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4', 'ncperc']
-	linreg.trainTestSplit(df, lastxRowForTest=30, filename=csvName)
-	# linreg.regOnly(df)
+		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4', 'tsetL5', 'viabilityL5', 'ncperc']
+	dfContour.columns = ['tsetL0', 'viabilityL0', 'tsetL1', 'viabilityL1', 'tsetL2', 'viabilityL2', 
+		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4', 'tsetL5', 'viabilityL5']
+
+	linreg.trainTestSplit(df, lastxRowForTest=4, filename=arL4csv, 
+		contourProcess = True, dfContour = dfContour)

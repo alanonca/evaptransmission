@@ -1,0 +1,33 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,ncperc          ,  R-squared:         ,   0.804
+Model:           ,OLS             ,  Adj. R-squared:    ,   0.467
+Method:          ,Least Squares   ,  F-statistic:       ,   2.388
+Date:            ,Fri, 09 Oct 2020,  Prob (F-statistic):, 0.127  
+Time:            ,19:12:22        ,  Log-Likelihood:    ,  58.845
+No. Observations:,    20          ,  AIC:               ,  -91.69
+Df Residuals:    ,     7          ,  BIC:               ,  -78.75
+Df Model:        ,    12          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+           ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+const      ,   -0.0462,    0.080,   -0.581, 0.580,   -0.234,    0.142
+tsetL0     ,    0.0194,    0.009,    2.141, 0.070,   -0.002,    0.041
+viabilityL0,   -0.0039,    0.002,   -2.099, 0.074,   -0.008,    0.000
+tsetL1     ,   -0.0161,    0.013,   -1.219, 0.262,   -0.047,    0.015
+viabilityL1,    0.0018,    0.002,    0.800, 0.450,   -0.004,    0.007
+tsetL2     ,   -0.0084,    0.013,   -0.636, 0.545,   -0.040,    0.023
+viabilityL2,    0.0018,    0.002,    0.797, 0.452,   -0.003,    0.007
+tsetL3     ,   -0.0019,    0.013,   -0.148, 0.886,   -0.033,    0.029
+viabilityL3,    0.0007,    0.002,    0.334, 0.748,   -0.004,    0.006
+tsetL4     ,    0.0313,    0.014,    2.204, 0.063,   -0.002,    0.065
+viabilityL4,   -0.0056,    0.002,   -2.371, 0.049,   -0.011,-1.61e-05
+tsetL5     ,   -0.0012,    0.012,   -0.101, 0.923,   -0.030,    0.027
+viabilityL5,    0.0015,    0.002,    0.844, 0.427,   -0.003,    0.006
+Omnibus:      , 4.075,  Durbin-Watson:     ,   1.409
+Prob(Omnibus):, 0.130,  Jarque-Bera (JB):  ,   2.390
+Skew:         , 0.827,  Prob(JB):          ,   0.303
+Kurtosis:     , 3.368,  Cond. No.          ,1.20e+03
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.2e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

@@ -4,7 +4,7 @@ from statsmodels.stats.outliers_influence import summary_table
 import numpy as np
 from statsmodels.sandbox.regression.predstd import wls_prediction_std
 
-def trainTestSplit(df, lastxRowForTest, filename=None):
+def trainTestSplit(df, lastxRowForTest, filename=None, contourProcess = False, dfContour = None):
     df = sm.add_constant(df) # adding a constant
 
     # creating training and testing datasets
@@ -33,23 +33,6 @@ def trainTestSplit(df, lastxRowForTest, filename=None):
     print(":Predicted:")
     print(predictions)
 
-    # # get confidence interval of fitting
-    # prstd, iv_l, iv_u = wls_prediction_std(model)
-    # st, data, ss2 = summary_table(model, alpha=0.05)
-
-    # fittedvalues = data[:, 2]
-    # predict_mean_se  = data[:, 3]
-    # predict_mean_ci_low, predict_mean_ci_upp = data[:, 4:6].T
-    # predict_ci_low, predict_ci_upp = data[:, 6:8].T
-
-    # # # Check we got the right things
-    # # print(np.max(np.abs(model.fittedvalues - fittedvalues)))
-    # # print(np.max(np.abs(iv_l - predict_ci_low)))
-    # # print(np.max(np.abs(iv_u - predict_ci_upp)))
-
-    # print(predict_ci_low)
-    # print(predict_ci_upp)
-
     # get prediction interval for all Xs
     # predictions2 = model.get_prediction(Xtest)
     # print(predictions2.summary_frame(alpha=0.05))
@@ -62,6 +45,15 @@ def trainTestSplit(df, lastxRowForTest, filename=None):
     f.write(print_model)
     f.close()
     predictions2df.to_csv(filename+"_ARLR_Predictions.csv")
+
+    # print(Xall.shape)
+    # print(dfContour.shape)
+
+    if contourProcess:
+        dfContour = sm.add_constant(dfContour)
+        predictions3 = model.get_prediction(dfContour)
+        predictions3df = predictions3.summary_frame(alpha=0.17)
+        predictions3df.to_csv(filename+"_ARLR_Contour_Predictions.csv")
 
 def regOnly(df):
     df = sm.add_constant(df) # adding a constant

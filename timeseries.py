@@ -32,7 +32,7 @@ def comparison(data1, data2, offset):
 
 	return [corrp, pvalp, corrs, pvals]
 
-def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, 
+def three(df, maxOffset, fileName, stationaryTest=True, trainTestSplit=True, splitLastxRows=3, forecastDays=1, 
 	VARorderselect='aic'):
 	# get training and test dataframes
 	if trainTestSplit:
@@ -94,6 +94,13 @@ def three(df, maxOffset, stationaryTest=True, trainTestSplit=True, splitLastxRow
 		# evaluate forecast
 		fevd = results.fevd(maxOffset)
 		fevd.summary()
+
+		# print results to files
+		with open(fileName+"_VAR_SummaryTable.csv", 'w') as f:
+			print(results.summary(), file=f)
+
+		with open(fileName+"_VAR_Predictions.csv", "w") as f2:
+			print(results.forecast_interval(df.values[-lag_order:], forecastDays, alpha=0.17), file=f2)
 
 		return [fig_current, fig_split]
 	

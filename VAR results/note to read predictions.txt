@@ -1,0 +1,5 @@
+last row corresponds to ncperc predictions
+
+first 4 rows average
+next 4 rows lower bound CI 1 sigma
+final 4 rows upper bound CI 1 sigma

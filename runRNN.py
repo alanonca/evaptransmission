@@ -18,5 +18,5 @@ for county in ['Harris', 'King', 'LA', 'Maricopa', 'SantaClara']:
 
 	# nntimeseries.main(df, offset=0, numInput=10, numHidden=70, maxEpochs=1e5, learnRate=1e-4, 
 	# 	TrainTestSplit=True, lastxRowForTest=30)
-	nntimeseries.main(df, offset=0, numInput=10, numHidden=70, maxEpochs=1e5, learnRate=1e-4, 
+	nntimeseries.main(df, offset=0, numInput=12, numHidden=70, maxEpochs=1e5, learnRate=1e-4, 
 		TrainTestSplit=True, lastxRowForTest=4, contourProcess = True, dfContour = dfContour)

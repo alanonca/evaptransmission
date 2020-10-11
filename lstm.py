@@ -25,7 +25,12 @@ def testTrainSplit(df, numOutput, numLSTMunits, maxEpochs, batchSize, lastxRowFo
 	 
 	train_X, train_y = dftrain.iloc[:, :-1], dftrain.iloc[:, -1]
 	test_X, test_y = dftest.iloc[:, :-1], dftest.iloc[:, -1]
+	all_X = df.iloc[:, :-1]
 
+	# # load model
+	# model = tf.keras.models.load_model('LSTM_model_' + countyName + '.h5')
+
+	# or build model
 	model = keras.Sequential()
 	# Add an Embedding layer expecting input vocab of size 1000, and
 	# output embedding dimension of size 64.
@@ -37,7 +42,6 @@ def testTrainSplit(df, numOutput, numLSTMunits, maxEpochs, batchSize, lastxRowFo
 	model.summary()
 
 	model.compile(loss='mae', optimizer='adam')
-	# fit network
 	history = model.fit(train_X, train_y, epochs=maxEpochs, batch_size=batchSize, 
 		validation_data=(test_X, test_y), verbose=2, shuffle=False)
 	# plot history
@@ -49,10 +53,9 @@ def testTrainSplit(df, numOutput, numLSTMunits, maxEpochs, batchSize, lastxRowFo
 
 	# save trained model
 	model.save('LSTM_model_' + countyName + '.h5')
-	# model = load_model('my_model.h5')
-	
+
 	# make a prediction
-	ypred = model.predict(test_X, verbose=0)
+	ypred = model.predict(all_X, verbose=0)
 	# with open('LSTM_Predictions_' + countyName + '.csv', 'w') as f:
 	# 	print(ypred, file=f)
 	numpy.savetxt('LSTM_Predictions_' + countyName + '.csv', ypred, delimiter=",")

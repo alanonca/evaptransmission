@@ -2,8 +2,8 @@ import pandas as pd
 import lstm
 
 # Apr + contour
-# for county in ['Harris', 'King', 'LA', 'Maricopa', 'SantaClara']:
-for county in ['Harris']:
+for county in ['Harris', 'King', 'LA', 'Maricopa', 'SantaClara']:
+# for county in ['Harris']:
 	print(county)
 
 	arL4csv = '20201008_' + county + '_April_output_arL5.csv'
@@ -17,5 +17,5 @@ for county in ['Harris']:
 	dfContour.columns = ['tsetL0', 'viabilityL0', 'tsetL1', 'viabilityL1', 'tsetL2', 'viabilityL2', 
 		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4', 'tsetL5', 'viabilityL5']
 
-	lstm.testTrainSplit(df, numOutput=1, numLSTMunits = 120, maxEpochs=100000, batchSize = 72, 
+	lstm.testTrainSplit(df, numOutput=1, numLSTMunits = 120, maxEpochs=300000, batchSize = 72, 
 		lastxRowForTest=4, countyName = county, contourProcess = True, dfContour = dfContour)

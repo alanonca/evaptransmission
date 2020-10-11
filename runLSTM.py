@@ -17,5 +17,5 @@ for county in ['Harris', 'King', 'LA', 'Maricopa', 'SantaClara']:
 	dfContour.columns = ['tsetL0', 'viabilityL0', 'tsetL1', 'viabilityL1', 'tsetL2', 'viabilityL2', 
 		'tsetL3', 'viabilityL3', 'tsetL4', 'viabilityL4', 'tsetL5', 'viabilityL5']
 
-	lstm.testTrainSplit(df, numOutput=1, numLSTMunits = 120, maxEpochs=300000, batchSize = 72, 
+	lstm.testTrainSplit(df, numOutput=1, numLSTMunits = 120, maxEpochs=1000000, batchSize = 72, 
 		lastxRowForTest=4, countyName = county, contourProcess = True, dfContour = dfContour)

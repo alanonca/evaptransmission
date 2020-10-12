@@ -54,10 +54,8 @@ def testTrainSplit(df, numOutput, numLSTMunits, maxEpochs, batchSize, lastxRowFo
 	# save trained model
 	model.save('LSTM_model_' + countyName + '.h5')
 
-	# make a prediction
+	# make a prediction then save
 	ypred = model.predict(all_X, verbose=0)
-	# with open('LSTM_Predictions_' + countyName + '.csv', 'w') as f:
-	# 	print(ypred, file=f)
 	numpy.savetxt('LSTM_Predictions_' + countyName + '.csv', ypred, delimiter=",")
 
 	if contourProcess:

@@ -1,0 +1,171 @@
+C:\Users\yzhu2\evaptransmission>python runSimpleRNN.py
+
+Creating a 12-70-1 neural network
+
+Setting maxEpochs = 100000.0
+Setting learning rate = 0.000100
+
+Starting training
+epoch = 2000 ms error = 0.0006
+epoch = 4000 ms error = 0.0005
+epoch = 6000 ms error = 0.0005
+epoch = 8000 ms error = 0.0005
+epoch = 10000 ms error = 0.0005
+epoch = 12000 ms error = 0.0005
+epoch = 14000 ms error = 0.0005
+epoch = 16000 ms error = 0.0005
+epoch = 18000 ms error = 0.0005
+epoch = 20000 ms error = 0.0005
+epoch = 22000 ms error = 0.0004
+epoch = 24000 ms error = 0.0004
+epoch = 26000 ms error = 0.0004
+epoch = 28000 ms error = 0.0004
+epoch = 30000 ms error = 0.0004
+epoch = 32000 ms error = 0.0004
+epoch = 34000 ms error = 0.0004
+epoch = 36000 ms error = 0.0004
+epoch = 38000 ms error = 0.0004
+epoch = 40000 ms error = 0.0004
+epoch = 42000 ms error = 0.0004
+epoch = 44000 ms error = 0.0004
+epoch = 46000 ms error = 0.0004
+epoch = 48000 ms error = 0.0004
+epoch = 50000 ms error = 0.0003
+epoch = 52000 ms error = 0.0003
+epoch = 54000 ms error = 0.0003
+epoch = 56000 ms error = 0.0003
+epoch = 58000 ms error = 0.0003
+epoch = 60000 ms error = 0.0003
+epoch = 62000 ms error = 0.0003
+epoch = 64000 ms error = 0.0003
+epoch = 66000 ms error = 0.0003
+epoch = 68000 ms error = 0.0003
+epoch = 70000 ms error = 0.0003
+epoch = 72000 ms error = 0.0003
+epoch = 74000 ms error = 0.0003
+epoch = 76000 ms error = 0.0003
+epoch = 78000 ms error = 0.0003
+epoch = 80000 ms error = 0.0003
+epoch = 82000 ms error = 0.0003
+epoch = 84000 ms error = 0.0003
+epoch = 86000 ms error = 0.0003
+epoch = 88000 ms error = 0.0003
+epoch = 90000 ms error = 0.0003
+epoch = 92000 ms error = 0.0003
+epoch = 94000 ms error = 0.0003
+epoch = 96000 ms error = 0.0003
+epoch = 98000 ms error = 0.0003
+epoch = 100000 ms error = 0.0003
+Training complete
+
+First few data points: actual-predicted:
+0: 0.0744, 0.058592185
+1: 0.0214, 0.057925444
+2: 0.119, 0.06835119
+3: 0.0888, 0.0961401
+4: 0.0166, 0.01705749
+5: 0.0533, 0.052232116
+
+Accuracy on data (using train data only) = 0.8267
+
+
+Check fitting and make predictions
+0.058592
+0.057925
+0.068351
+0.096140
+0.017057
+0.052232
+0.074090
+0.039302
+0.091630
+0.084908
+0.077358
+0.043745
+0.042804
+0.049614
+0.056631
+0.060550
+0.065202
+0.072405
+0.076838
+0.069717
+0.068727
+0.072155
+0.081258
+0.082754
+0.116068
+0.093322
+0.061958
+0.039926
+0.092624
+0.082815
+0.090511
+0.078593
+0.073142
+0.078358
+0.090182
+0.089442
+0.082191
+0.079837
+0.078470
+0.083501
+0.058935
+0.063122
+0.054663
+0.061107
+0.063701
+0.074592
+0.081326
+0.029121
+0.066290
+0.064280
+0.042827
+0.074823
+0.076368
+0.054499
+0.040552
+0.036481
+0.062548
+0.055927
+0.064802
+0.056969
+0.062859
+0.058008
+0.051775
+0.073161
+0.059771
+0.048947
+0.077098
+0.082764
+0.048738
+0.039930
+0.043268
+0.047263
+0.047767
+0.042441
+0.053080
+0.092812
+0.012981
+0.088172
+0.015168
+0.048705
+0.107450
+0.071974
+0.049256
+0.054149
+0.041076
+0.054784
+0.072995
+0.075439
+0.067482
+0.050365
+0.018315
+0.039756
+0.055224
+0.065542
+0.050060
+0.081537
+Fitting check complete. Last 21 elements are predictions.
+
+End model

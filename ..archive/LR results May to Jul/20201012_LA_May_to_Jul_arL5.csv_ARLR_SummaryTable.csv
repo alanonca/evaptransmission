@@ -1,0 +1,31 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,ncperc          ,  R-squared:         ,   0.208
+Model:           ,OLS             ,  Adj. R-squared:    ,  -0.042
+Method:          ,Least Squares   ,  F-statistic:       ,  0.8311
+Date:            ,Mon, 12 Oct 2020,  Prob (F-statistic):, 0.619  
+Time:            ,16:52:25        ,  Log-Likelihood:    ,  111.84
+No. Observations:,    51          ,  AIC:               ,  -197.7
+Df Residuals:    ,    38          ,  BIC:               ,  -172.6
+Df Model:        ,    12          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+           ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+const      ,    0.0951,    0.039,    2.410, 0.021,    0.015,    0.175
+tsetL0     ,    0.0074,    0.008,    0.903, 0.372,   -0.009,    0.024
+viabilityL0,   -0.0022,    0.002,   -1.237, 0.224,   -0.006,    0.001
+tsetL1     ,    0.0092,    0.009,    1.009, 0.319,   -0.009,    0.028
+viabilityL1,   -0.0021,    0.002,   -1.203, 0.236,   -0.006,    0.001
+tsetL2     ,   -0.0051,    0.009,   -0.566, 0.575,   -0.023,    0.013
+viabilityL2,    0.0005,    0.002,    0.258, 0.798,   -0.003,    0.004
+tsetL3     ,   -0.0075,    0.009,   -0.847, 0.402,   -0.025,    0.010
+viabilityL3,    0.0025,    0.002,    1.440, 0.158,   -0.001,    0.006
+tsetL4     ,    0.0012,    0.008,    0.145, 0.885,   -0.016,    0.018
+viabilityL4,   -0.0002,    0.002,   -0.131, 0.897,   -0.004,    0.003
+tsetL5     ,   -0.0030,    0.007,   -0.405, 0.687,   -0.018,    0.012
+viabilityL5,   -0.0002,    0.002,   -0.125, 0.901,   -0.004,    0.003
+Omnibus:      ,63.246,  Durbin-Watson:     ,   1.603 
+Prob(Omnibus):, 0.000,  Jarque-Bera (JB):  , 569.238 
+Skew:         , 3.138,  Prob(JB):          ,2.46e-124
+Kurtosis:     ,18.116,  Cond. No.          ,    644. 
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

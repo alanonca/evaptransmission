@@ -1,0 +1,33 @@
+                      OLS Regression Results                     
+Dep. Variable:   ,ncperc          ,  R-squared:         ,   0.208
+Model:           ,OLS             ,  Adj. R-squared:    ,  -0.043
+Method:          ,Least Squares   ,  F-statistic:       ,  0.8294
+Date:            ,Mon, 12 Oct 2020,  Prob (F-statistic):, 0.620  
+Time:            ,16:52:25        ,  Log-Likelihood:    ,  118.98
+No. Observations:,    51          ,  AIC:               ,  -212.0
+Df Residuals:    ,    38          ,  BIC:               ,  -186.8
+Df Model:        ,    12          ,                     ,        
+Covariance Type: ,nonrobust       ,                     ,        
+           ,   coef   , std err ,    t    ,P>|t| ,  [0.025 ,  0.975] 
+const      ,   -0.0406,    0.072,   -0.563, 0.576,   -0.186,    0.105
+tsetL0     ,   -0.0052,    0.005,   -1.145, 0.259,   -0.014,    0.004
+viabilityL0,    0.0011,    0.001,    1.270, 0.212,   -0.001,    0.003
+tsetL1     ,    0.0013,    0.006,    0.204, 0.839,   -0.011,    0.014
+viabilityL1,    0.0003,    0.001,    0.264, 0.794,   -0.002,    0.003
+tsetL2     ,    0.0064,    0.006,    0.995, 0.326,   -0.007,    0.019
+viabilityL2,   -0.0008,    0.001,   -0.697, 0.490,   -0.003,    0.002
+tsetL3     ,   -0.0015,    0.007,   -0.230, 0.819,   -0.015,    0.012
+viabilityL3,    0.0011,    0.001,    0.810, 0.423,   -0.002,    0.004
+tsetL4     ,    0.0058,    0.007,    0.876, 0.386,   -0.008,    0.019
+viabilityL4,   -0.0018,    0.001,   -1.387, 0.174,   -0.005,    0.001
+tsetL5     ,   -0.0014,    0.005,   -0.289, 0.774,   -0.011,    0.008
+viabilityL5,    0.0001,    0.001,    0.151, 0.881,   -0.002,    0.002
+Omnibus:      , 5.601,  Durbin-Watson:     ,   1.947
+Prob(Omnibus):, 0.061,  Jarque-Bera (JB):  ,   4.482
+Skew:         ,-0.616,  Prob(JB):          ,   0.106
+Kurtosis:     , 3.770,  Cond. No.          ,3.16e+03
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 3.16e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

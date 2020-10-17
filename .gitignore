@@ -1,5 +1,6 @@
 test*
 LD2011_2014.txt
+*archive*/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
